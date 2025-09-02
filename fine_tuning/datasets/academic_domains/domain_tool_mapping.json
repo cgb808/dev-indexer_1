@@ -1,0 +1,60 @@
+{
+  "mathematics": {
+    "specialist": "phi3_mathematics_tutor",
+    "voice": "jarvis",
+    "tools": [
+      "calculator",
+      "graphing",
+      "latex_renderer",
+      "equation_solver"
+    ]
+  },
+  "english": {
+    "specialist": "phi3_english_tutor",
+    "voice": "alan",
+    "tools": [
+      "text_analyzer",
+      "writing_assistant",
+      "literature_database"
+    ]
+  },
+  "art": {
+    "specialist": "phi3_art_tutor",
+    "voice": "amy",
+    "tools": [
+      "image_analyzer",
+      "color_palette",
+      "music_notation",
+      "timeline_creator"
+    ]
+  },
+  "history": {
+    "specialist": "phi3_history_tutor",
+    "voice": "jarvis",
+    "tools": [
+      "timeline_creator",
+      "map_generator",
+      "primary_source_analyzer"
+    ]
+  },
+  "science": {
+    "specialist": "phi3_science_tutor",
+    "voice": "jarvis",
+    "tools": [
+      "data_analyzer",
+      "simulation_runner",
+      "lab_guide",
+      "formula_renderer"
+    ]
+  },
+  "foreign_language": {
+    "specialist": "phi3_language_tutor",
+    "voice": "amy",
+    "tools": [
+      "translator",
+      "pronunciation_guide",
+      "grammar_checker",
+      "culture_guide"
+    ]
+  }
+}

@@ -1,0 +1,97 @@
+services:
+  backend:
+    build:
+      context: .
+    container_name: zenglow-backend
+    env_file:
+      - .env
+    environment:
+      STRICT_ENV: "false"
+      DEV_FAKE_LLM: ${DEV_FAKE_LLM:-true}
+      RAG_RETRIEVAL_MODE: ${RAG_RETRIEVAL_MODE:-pgvector}
+      DATABASE_URL: ${DATABASE_URL:-postgresql://postgres:postgres@postgres:5432/rag_db}
+      SUPABASE_DB_URL: ${SUPABASE_DB_URL:-}
+      SUPABASE_DIRECT_URL: ${SUPABASE_DIRECT_URL:-}
+      SUPABASE_POOLER_URL: ${SUPABASE_POOLER_URL:-}
+      DB_SEARCH_PATH: ${DB_SEARCH_PATH:-public}
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      LLM_ALLOW_PREFIXES: "http://ollama:"
+      OLLAMA_URL: http://ollama:11434
+      OLLAMA_MODEL: "gemma:2b"
+    ports:
+      - "8000:8000"
+    depends_on:
+      - ollama
+      - redis
+      - postgres
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+
+  ollama:
+    image: ollama/ollama:latest
+    container_name: ollama
+    restart: unless-stopped
+    runtime: nvidia
+    ports:
+      - "11435:11434"  # host:container
+    volumes:
+      - ollama_models:/root/.ollama
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+      - NVIDIA_DRIVER_CAPABILITIES=compute,utility
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:11434/api/tags"]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+  webui:
+    image: ghcr.io/open-webui/open-webui:main
+    container_name: open-webui
+    restart: unless-stopped
+    depends_on:
+      - ollama
+    environment:
+      OLLAMA_API_BASE_URL: http://ollama:11434
+    ports:
+      - "3000:8080"
+    volumes:
+      - webui_data:/app/backend/data
+
+  redis:
+    image: redis:7-alpine
+    container_name: zenglow-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    command: ["redis-server", "--save", "", "--appendonly", "no"]
+
+  postgres:
+    image: pgvector/pgvector:pg16
+    container_name: zenglow-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: rag_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./sql/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+
+volumes:
+  ollama_models:
+  webui_data:
+  pgdata:

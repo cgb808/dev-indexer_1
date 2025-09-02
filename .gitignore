@@ -1,0 +1,52 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.egg-info/
+.env
+.venv/
+.env.*
+*.ipynb_checkpoints/
+
+# Packaging / build
+build/
+dist/
+pip-wheel-metadata/
+
+# Caches & tooling
+.mypy_cache/
+.ruff_cache/
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Node / Frontend
+node_modules/
+*.tsbuildinfo
+
+# IDE / Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+
+# Logs & temp
+*.log
+*.tmp
+
+# Data / artifacts (kept out of fresh repo)
+data/
+artifact/
+Artifact/
+models/weights/
+
+# Misc
+*.tar.gz
+*.zip
+# Large model / test assets (excluded)
+tests/whisper/ggml-base.en.bin
+models/**/model.safetensors
+*.safetensors

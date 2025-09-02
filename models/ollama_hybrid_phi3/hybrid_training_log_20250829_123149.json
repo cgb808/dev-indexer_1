@@ -1,0 +1,105 @@
+{
+  "model": "phi3:mini",
+  "training_type": "hybrid_methodology_mathematics",
+  "methodology": "calculative_phases",
+  "total_examples_processed": 1000,
+  "dataset_composition": {
+    "pure_methodology": 500,
+    "mathematics_with_methodology": 500
+  },
+  "phases": {
+    "phase_1": {
+      "config": {
+        "name": "Foundation Integration",
+        "focus": "Establish balance between pure methodology and subject-specific application",
+        "examples_per_phase": 500,
+        "description": "Build foundation integrating teaching techniques with mathematical content"
+      },
+      "examples_processed": 500,
+      "sample_responses": [
+        {
+          "prompt": "[HYBRID_TRAINING_MODE] [MATH_WITH_METHODOLOGY] [Conceptual Explanation] [METHODOLOGY: Conceptual Explanation] Connect to underlying concepts: [LEARNING_CONTEXT] Mathematics Tutoring [LEARNING_OBJECTIV...",
+          "expected": "[INTEGRATED_RESPONSE] [TUTORING_RESPONSE] Paige has 100 space stickers to divide among 3 friends, resulting in 33 stickers for each friend, with 1 remaining. She also has 50 cat stickers to divide amo...",
+          "model_response": "[HYBRID_TRAINING_MODE] [MATH_WITH_METHODOLOGY] Paige's Sticker Sharing Problem: A Step-by-Step Guide to Solving Math Word Problems with Conceptual Explanation and Clear Pedagogy.\n\n[LEARNING_CONTEXT]: ...",
+          "example_type": "mathematics_with_methodology"
+        },
+        {
+          "prompt": "[HYBRID_TRAINING_MODE] [PURE_METHODOLOGY] [SOCRATIC_SCENARIO] Help student recognize their own assumptions (Example 10)...",
+          "expected": "[METHODOLOGY_RESPONSE] [SOCRATIC_RESPONSE] That's an interesting point. What makes you think that? Can you walk me through your reasoning? What evidence supports that conclusion? How does this connect...",
+          "model_response": "In a Socratic scenario aimed at helping students identify and challenge their own assumptions, we can integrate pure teaching methodology with subject-specific content in mathematics. Here's how this ...",
+          "example_type": "pure_methodology"
+        },
+        {
+          "prompt": "[HYBRID_TRAINING_MODE] [PURE_METHODOLOGY] [ADAPTATION_SCENARIO] Student needs frequent encouragement (Case 30)...",
+          "expected": "[METHODOLOGY_RESPONSE] [ADAPTIVE_RESPONSE] I notice you learn best when we approach this differently. Let me adjust my teaching style to match how you process information. This isn't about changing th...",
+          "model_response": "In a hybrid teaching scenario where the student requires Case 30, which involves needing frequent encouragement due to potential difficulties in grasping mathematical concepts or perhaps anxiety aroun...",
+          "example_type": "pure_methodology"
+        }
+      ],
+      "timestamp": "2025-08-29T12:31:12.214316"
+    },
+    "phase_2": {
+      "config": {
+        "name": "Advanced Synthesis",
+        "focus": "Develop sophisticated integration of methodology with content",
+        "examples_per_phase": 300,
+        "description": "Advanced synthesis of pedagogical approaches with mathematical reasoning"
+      },
+      "examples_processed": 300,
+      "sample_responses": [
+        {
+          "prompt": "[HYBRID_TRAINING_MODE] [MATH_WITH_METHODOLOGY] [Conceptual Explanation] [METHODOLOGY: Conceptual Explanation] Connect to underlying concepts: [LEARNING_CONTEXT] Mathematics Tutoring [LEARNING_OBJECTIV...",
+          "expected": "[INTEGRATED_RESPONSE] [TUTORING_RESPONSE] Paige has 100 space stickers to divide among 3 friends, resulting in 33 stickers for each friend, with 1 remaining. She also has 50 cat stickers to divide amo...",
+          "model_response": "[HYBRID_TRAINING_MODE] [MATH_WITH_METHODOLOGY] Paige's Sticker Sharing Problem: A Step-by-Step Guide to Solving Math Word Problems with Conceptual Explanation and Clear Pedagogy.\n\n[LEARNING_CONTEXT]: ...",
+          "example_type": "mathematics_with_methodology"
+        },
+        {
+          "prompt": "[HYBRID_TRAINING_MODE] [PURE_METHODOLOGY] [SOCRATIC_SCENARIO] Help student recognize their own assumptions (Example 10)...",
+          "expected": "[METHODOLOGY_RESPONSE] [SOCRATIC_RESPONSE] That's an interesting point. What makes you think that? Can you walk me through your reasoning? What evidence supports that conclusion? How does this connect...",
+          "model_response": "In a Socratic seminar, the teacher facilitates an open dialogue where students are encouraged to question and explore ideas deeply. In this scenario focused on helping a student recognize their own as...",
+          "example_type": "pure_methodology"
+        },
+        {
+          "prompt": "[HYBRID_TRAINING_MODE] [PURE_METHODOLOGY] [ADAPTATION_SCENARIO] Student needs frequent encouragement (Case 30)...",
+          "expected": "[METHODOLOGY_RESPONSE] [ADAPTIVE_RESPONSE] I notice you learn best when we approach this differently. Let me adjust my teaching style to match how you process information. This isn't about changing th...",
+          "model_response": "In the HYBRID_TRAINING_MODE, we will blend traditional teaching methods with subject-specific content to create an engaging and effective learning experience for Case 30. The student requires regular ...",
+          "example_type": "pure_methodology"
+        }
+      ],
+      "timestamp": "2025-08-29T12:31:30.502784"
+    },
+    "phase_3": {
+      "config": {
+        "name": "Unified Mastery",
+        "focus": "Master seamless integration of all approaches",
+        "examples_per_phase": 200,
+        "description": "Perfect integration of methodology and content for optimal teaching"
+      },
+      "examples_processed": 200,
+      "sample_responses": [
+        {
+          "prompt": "[HYBRID_TRAINING_MODE] [MATH_WITH_METHODOLOGY] [Conceptual Explanation] [METHODOLOGY: Conceptual Explanation] Connect to underlying concepts: [LEARNING_CONTEXT] Mathematics Tutoring [LEARNING_OBJECTIV...",
+          "expected": "[INTEGRATED_RESPONSE] [TUTORING_RESPONSE] Paige has 100 space stickers to divide among 3 friends, resulting in 33 stickers for each friend, with 1 remaining. She also has 50 cat stickers to divide amo...",
+          "model_response": "[HYBRID_TRAINING_MODE] [MATH_WITH_METHODOLOGY] Paige's Sticker Sharing Problem: A Step-by-Step Guide to Solving Math Word Problems with Conceptual Explanation and Pedagogical Techniques\n\n[LEARNING_CON...",
+          "example_type": "mathematics_with_methodology"
+        },
+        {
+          "prompt": "[HYBRID_TRAINING_MODE] [PURE_METHODOLOGY] [SOCRATIC_SCENARIO] Help student recognize their own assumptions (Example 10)...",
+          "expected": "[METHODOLOGY_RESPONSE] [SOCRATIC_RESPONSE] That's an interesting point. What makes you think that? Can you walk me through your reasoning? What evidence supports that conclusion? How does this connect...",
+          "model_response": "In a Socratic scenario, we engage the students in an interactive dialogue to help them identify and examine their underlying assumptions about mathematical concepts. This approach not only fosters cri...",
+          "example_type": "pure_methodology"
+        },
+        {
+          "prompt": "[HYBRID_TRAINING_MODE] [PURE_METHODOLOGY] [ADAPTATION_SCENARIO] Student needs frequent encouragement (Case 30)...",
+          "expected": "[METHODOLOGY_RESPONSE] [ADAPTIVE_RESPONSE] I notice you learn best when we approach this differently. Let me adjust my teaching style to match how you process information. This isn't about changing th...",
+          "model_response": "In the HYBRID_TRAINING_MODE, we will combine traditional teaching methods with subject-specific content to create an engaging and effective learning experience for Case 30. The student requires regula...",
+          "example_type": "pure_methodology"
+        }
+      ],
+      "timestamp": "2025-08-29T12:31:48.792035"
+    }
+  },
+  "start_time": "2025-08-29T12:30:53.334999",
+  "end_time": "2025-08-29T12:31:49.792603",
+  "status": "completed"
+}

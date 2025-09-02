@@ -1,0 +1,8 @@
+{
+  "remote": {
+    "host": "192.168.1.192",
+    "user": "cgbowen",
+    "path": "/home/cgbowen/ZenGlowAIWorkshop",
+    "port": 3389
+  }
+}

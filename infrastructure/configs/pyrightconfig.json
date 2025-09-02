@@ -1,0 +1,9 @@
+{
+  "typeCheckingMode": "basic",
+  "reportMissingImports": false,
+  "reportMissingTypeStubs": false,
+  "reportUnknownMemberType": false,
+  "reportUnknownVariableType": false,
+  "reportUnknownParameterType": false,
+  "exclude": ["**/.venv", "**/build", "**/dist"]
+}

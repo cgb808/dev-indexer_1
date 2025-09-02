@@ -1,0 +1,300 @@
+{
+  "academic_domains": {
+    "mathematics": {
+      "specialist": "phi3_mathematics_tutor",
+      "subdomains": [
+        "algebra",
+        "geometry",
+        "trigonometry",
+        "calculus"
+      ],
+      "training_files": [
+        {
+          "file": "existing_ChristophSchuhmann_basic-math-problems-with-step-by-step-solutions_instructional.jsonl",
+          "examples": 0
+        },
+        {
+          "file": "assessment_examples.jsonl",
+          "examples": 25
+        },
+        {
+          "file": "socratic_questioning.jsonl",
+          "examples": 75
+        },
+        {
+          "file": "existing_ChristophSchuhmann_basic-math-problems-with-step-by-step-solutions_sample.jsonl",
+          "examples": 1000
+        },
+        {
+          "file": "existing_pbcong_gsm8k_step_by_step_sample.jsonl",
+          "examples": 1000
+        },
+        {
+          "file": "training_examples.jsonl",
+          "examples": 100
+        },
+        {
+          "file": "tool_integration.jsonl",
+          "examples": 50
+        },
+        {
+          "file": "existing_hybrid_methodology_math_dataset.jsonl",
+          "examples": 1000
+        },
+        {
+          "file": "existing_pbcong_gsm8k_step_by_step_instructional.jsonl",
+          "examples": 100
+        }
+      ],
+      "example_count": 3350
+    },
+    "english": {
+      "specialist": "phi3_english_tutor",
+      "subdomains": [
+        "creative_writing",
+        "reading_comprehension",
+        "american_literature"
+      ],
+      "training_files": [
+        {
+          "file": "socratic_questioning.jsonl",
+          "examples": 75
+        },
+        {
+          "file": "training_examples.jsonl",
+          "examples": 100
+        },
+        {
+          "file": "tool_integration.jsonl",
+          "examples": 50
+        },
+        {
+          "file": "assessment_examples.jsonl",
+          "examples": 25
+        }
+      ],
+      "example_count": 250
+    },
+    "science": {
+      "specialist": "phi3_science_tutor",
+      "subdomains": [
+        "environmental_science",
+        "physics",
+        "astronomy",
+        "forensic_science",
+        "oceanography",
+        "botany",
+        "earth_science",
+        "geology",
+        "physical_science",
+        "zoology",
+        "anatomy",
+        "computer_science",
+        "food_science"
+      ],
+      "training_files": [
+        {
+          "file": "existing_hybrid_methodology_math_dataset.jsonl",
+          "examples": 1000
+        },
+        {
+          "file": "existing_socratic_method_high_confidence.jsonl",
+          "examples": 846
+        },
+        {
+          "file": "existing_socratic_method_combined.jsonl",
+          "examples": 855
+        },
+        {
+          "file": "existing_combined_interruption_session_training.jsonl",
+          "examples": 71
+        },
+        {
+          "file": "existing_KarthikaRajagopal_socratic_teaching_dataset_sample.jsonl",
+          "examples": 188
+        },
+        {
+          "file": "existing_session_management_training.jsonl",
+          "examples": 6
+        },
+        {
+          "file": "existing_sample_tool_control_training.jsonl",
+          "examples": 190
+        },
+        {
+          "file": "assessment_examples.jsonl",
+          "examples": 25
+        },
+        {
+          "file": "existing_combined_drill_down_questioning.jsonl",
+          "examples": 648
+        },
+        {
+          "file": "existing_pbcong_gsm8k_step_by_step_instructional.jsonl",
+          "examples": 100
+        },
+        {
+          "file": "existing_tool_control_training.jsonl",
+          "examples": 4000
+        },
+        {
+          "file": "existing_final_balanced_dataset.jsonl",
+          "examples": 1842
+        },
+        {
+          "file": "existing_interruption_handling_training.jsonl",
+          "examples": 65
+        },
+        {
+          "file": "existing_raw_drill_down_questioning.jsonl",
+          "examples": 294
+        },
+        {
+          "file": "existing_pbcong_gsm8k_step_by_step_sample.jsonl",
+          "examples": 1000
+        },
+        {
+          "file": "existing_Josephgflowers_OpenOrca-Step-by-step-reasoning_sample.jsonl",
+          "examples": 1000
+        },
+        {
+          "file": "tool_integration.jsonl",
+          "examples": 50
+        },
+        {
+          "file": "existing_KarthikaRajagopal_socratic_teaching_dataset_instructional.jsonl",
+          "examples": 0
+        },
+        {
+          "file": "existing_ChristophSchuhmann_basic-math-problems-with-step-by-step-solutions_sample.jsonl",
+          "examples": 1000
+        },
+        {
+          "file": "socratic_questioning.jsonl",
+          "examples": 75
+        },
+        {
+          "file": "existing_pure_methodology_tutoring.jsonl",
+          "examples": 500
+        },
+        {
+          "file": "existing_ChristophSchuhmann_basic-math-problems-with-step-by-step-solutions_instructional.jsonl",
+          "examples": 0
+        },
+        {
+          "file": "existing_real_drill_down_questioning.jsonl",
+          "examples": 284
+        },
+        {
+          "file": "existing_varied_drill_down_questioning.jsonl",
+          "examples": 0
+        },
+        {
+          "file": "existing_Josephgflowers_OpenOrca-Step-by-step-reasoning_instructional.jsonl",
+          "examples": 0
+        },
+        {
+          "file": "training_examples.jsonl",
+          "examples": 100
+        }
+      ],
+      "example_count": 14139
+    },
+    "history": {
+      "specialist": "phi3_history_tutor",
+      "subdomains": [
+        "civics",
+        "us_history",
+        "world_history",
+        "economics",
+        "regional_history/west_virginia"
+      ],
+      "training_files": [
+        {
+          "file": "tool_integration.jsonl",
+          "examples": 50
+        },
+        {
+          "file": "training_examples.jsonl",
+          "examples": 100
+        },
+        {
+          "file": "assessment_examples.jsonl",
+          "examples": 25
+        },
+        {
+          "file": "socratic_questioning.jsonl",
+          "examples": 75
+        }
+      ],
+      "example_count": 250
+    },
+    "art": {
+      "specialist": "phi3_art_tutor",
+      "subdomains": [
+        "foundational",
+        "abstract",
+        "history_of_art",
+        "performing",
+        "music_theory",
+        "visual_arts"
+      ],
+      "training_files": [
+        {
+          "file": "training_examples.jsonl",
+          "examples": 100
+        },
+        {
+          "file": "assessment_examples.jsonl",
+          "examples": 25
+        },
+        {
+          "file": "socratic_questioning.jsonl",
+          "examples": 75
+        },
+        {
+          "file": "existing_KarthikaRajagopal_socratic_teaching_dataset_instructional.jsonl",
+          "examples": 0
+        },
+        {
+          "file": "tool_integration.jsonl",
+          "examples": 50
+        },
+        {
+          "file": "existing_KarthikaRajagopal_socratic_teaching_dataset_sample.jsonl",
+          "examples": 188
+        }
+      ],
+      "example_count": 438
+    },
+    "foreign_language": {
+      "specialist": "phi3_language_tutor",
+      "subdomains": [
+        "spanish",
+        "french",
+        "italian"
+      ],
+      "training_files": [
+        {
+          "file": "tool_integration.jsonl",
+          "examples": 50
+        },
+        {
+          "file": "training_examples.jsonl",
+          "examples": 100
+        },
+        {
+          "file": "socratic_questioning.jsonl",
+          "examples": 75
+        },
+        {
+          "file": "assessment_examples.jsonl",
+          "examples": 25
+        }
+      ],
+      "example_count": 250
+    }
+  },
+  "total_examples": 18677,
+  "generated_at": "2024-01-01"
+}

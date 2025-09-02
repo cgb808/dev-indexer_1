@@ -1,0 +1,55 @@
+{
+  "model_config": {
+    "model_name": "mistral-7b-instruct",
+    "model_size": "7B",
+    "context_length": 32768,
+    "download_url": "https://huggingface.co/mistralai/Mistral-7B-Instruct-v0.3",
+    "local_path": "models/central_control/mistral_7b",
+    "quantization": {
+      "enabled": true,
+      "format": "GGUF",
+      "precision": "Q4_K_M"
+    }
+  },
+  "orchestration_config": {
+    "max_concurrent_requests": 10,
+    "request_timeout_ms": 5000,
+    "context_management": {
+      "max_context_length": 8192,
+      "context_window_overlap": 512,
+      "memory_retention_strategy": "sliding_window"
+    },
+    "routing_strategy": {
+      "primary_router": "tiny_tool_controller",
+      "fallback_router": "mistral_direct",
+      "routing_confidence_threshold": 0.7
+    }
+  },
+  "integration_points": {
+    "academic_domains": [
+      "mathematics", "science", "english", 
+      "history", "art", "foreign_language"
+    ],
+    "tool_categories": [
+      "mathematical", "visual", "search", 
+      "audio", "workflow"
+    ],
+    "audio_pipeline": {
+      "whisper_cpp": "vendor/whisper.cpp/build/bin/whisper-cli",
+      "piper_tts": "vendor/piper/piper",
+      "voice_selection": "domain_based"
+    }
+  },
+  "performance_targets": {
+    "orchestration_latency_ms": 200,
+    "total_pipeline_latency_ms": 400,
+    "throughput_requests_per_second": 50,
+    "memory_usage_limit_gb": 8
+  },
+  "logging": {
+    "level": "INFO",
+    "structured_logging": true,
+    "correlation_ids": true,
+    "performance_metrics": true
+  }
+}

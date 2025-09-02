@@ -1,0 +1,33 @@
+{
+  "version": 1,
+  "generated_at": "2025-08-28T00:00:00Z",
+  "embedding": {
+    "model_name": "local-embed-default",
+    "dimension": 768,
+    "endpoint": "${EMBED_ENDPOINT:-http://127.0.0.1:8000/model/embed}"
+  },
+  "quality_profile": {
+    "min_words": 6,
+    "max_words": 180,
+    "min_reading_ease": 35,
+    "exclude_synthetic": true,
+    "max_fallback_fraction": 0.3
+  },
+  "curation_sources": {
+    "HistoricalFigure": 0.06,
+    "VeteranPhilosophy": 0.05,
+    "LifeLessonsFramework": 0.05,
+    "EarlyChildDev": 0.05,
+    "ReflectionQuestions": 0.07,
+    "JapaneseConcept": 0.05,
+    "Science (SciQ+ARC)": 0.29,
+    "Reading (SQuAD)": 0.17,
+    "Math (GSM8K)": 0.09,
+    "FallbackMultistage": 0.15
+  },
+  "ingest": {
+    "batch_tag_example": "epoch1",
+    "script": "scripts/ingest_curated_dataset.py"
+  },
+  "notes": "Update this manifest whenever curation ratios or quality gates change."
+}

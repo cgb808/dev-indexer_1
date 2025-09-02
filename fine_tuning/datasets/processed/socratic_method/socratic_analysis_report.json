@@ -1,0 +1,153 @@
+{
+  "analysis_timestamp": "2025-08-29T22:22:50.017157",
+  "total_socratic_examples": 855,
+  "confidence_distribution": {
+    "high_confidence": 846,
+    "medium_confidence": 0,
+    "low_confidence": 9
+  },
+  "source_files": {
+    "/home/cgbowen/AIWorkspace/fine_tuning/datasets/processed/pure_methodology_tutoring.jsonl": 147,
+    "/home/cgbowen/AIWorkspace/fine_tuning/datasets/processed/hybrid/hybrid_methodology_math_dataset.jsonl": 323,
+    "/home/cgbowen/AIWorkspace/data/tutoring_instructional/combined_tutoring_dataset.jsonl": 188,
+    "/home/cgbowen/AIWorkspace/data/tutoring_instructional/general_tutoring_socratic.jsonl": 188,
+    "/home/cgbowen/AIWorkspace/fine_tuning/datasets/processed/next_epoch/final_balanced_dataset.jsonl": 9
+  },
+  "sample_examples": [
+    {
+      "instruction": "[SOCRATIC_SCENARIO] Help student recognize their own assumptions (Example 10)",
+      "input": "",
+      "output": "[SOCRATIC_RESPONSE] That's an interesting point. What makes you think that? Can you walk me through your reasoning? What evidence supports that conclusion? How does this connect to what we discussed earlier? What would happen if we changed one element of this situation?",
+      "example_type": "pure_methodology",
+      "subject_focus": "subject_agnostic",
+      "socratic_metadata": {
+        "source_file": "/home/cgbowen/AIWorkspace/fine_tuning/datasets/processed/pure_methodology_tutoring.jsonl",
+        "line_number": 1,
+        "extraction_timestamp": "2025-08-29T22:22:49.818459",
+        "socratic_confidence": 1.0
+      }
+    },
+    {
+      "instruction": "[SOCRATIC_SCENARIO] Encourage student to generate examples (Example 7)",
+      "input": "",
+      "output": "[SOCRATIC_RESPONSE] That's an interesting point. What makes you think that? Can you walk me through your reasoning? What evidence supports that conclusion? How does this connect to what we discussed earlier? What would happen if we changed one element of this situation?",
+      "example_type": "pure_methodology",
+      "subject_focus": "subject_agnostic",
+      "socratic_metadata": {
+        "source_file": "/home/cgbowen/AIWorkspace/fine_tuning/datasets/processed/pure_methodology_tutoring.jsonl",
+        "line_number": 3,
+        "extraction_timestamp": "2025-08-29T22:22:49.818842",
+        "socratic_confidence": 1.0
+      }
+    },
+    {
+      "instruction": "[SOCRATIC_SCENARIO] Lead student to connect new and prior knowledge (Example 8)",
+      "input": "",
+      "output": "[SOCRATIC_RESPONSE] That's an interesting point. What makes you think that? Can you walk me through your reasoning? What evidence supports that conclusion? How does this connect to what we discussed earlier? What would happen if we changed one element of this situation?",
+      "example_type": "pure_methodology",
+      "subject_focus": "subject_agnostic",
+      "socratic_metadata": {
+        "source_file": "/home/cgbowen/AIWorkspace/fine_tuning/datasets/processed/pure_methodology_tutoring.jsonl",
+        "line_number": 5,
+        "extraction_timestamp": "2025-08-29T22:22:49.818888",
+        "socratic_confidence": 1.0
+      }
+    },
+    {
+      "instruction": "[SOCRATIC_SCENARIO] Guide student to discover concept through questions (Example 15)",
+      "input": "",
+      "output": "[SOCRATIC_RESPONSE] That's an interesting point. What makes you think that? Can you walk me through your reasoning? What evidence supports that conclusion? How does this connect to what we discussed earlier? What would happen if we changed one element of this situation?",
+      "example_type": "pure_methodology",
+      "subject_focus": "subject_agnostic",
+      "socratic_metadata": {
+        "source_file": "/home/cgbowen/AIWorkspace/fine_tuning/datasets/processed/pure_methodology_tutoring.jsonl",
+        "line_number": 12,
+        "extraction_timestamp": "2025-08-29T22:22:49.818996",
+        "socratic_confidence": 1.0
+      }
+    },
+    {
+      "instruction": "[SOCRATIC_SCENARIO] Guide student to apply concepts to new situations (Example 26)",
+      "input": "",
+      "output": "[SOCRATIC_RESPONSE] That's an interesting point. What makes you think that? Can you walk me through your reasoning? What evidence supports that conclusion? How does this connect to what we discussed earlier? What would happen if we changed one element of this situation?",
+      "example_type": "pure_methodology",
+      "subject_focus": "subject_agnostic",
+      "socratic_metadata": {
+        "source_file": "/home/cgbowen/AIWorkspace/fine_tuning/datasets/processed/pure_methodology_tutoring.jsonl",
+        "line_number": 29,
+        "extraction_timestamp": "2025-08-29T22:22:49.819262",
+        "socratic_confidence": 1.0
+      }
+    },
+    {
+      "instruction": "[SOCRATIC_SCENARIO] Help student evaluate different approaches (Example 16)",
+      "input": "",
+      "output": "[SOCRATIC_RESPONSE] That's an interesting point. What makes you think that? Can you walk me through your reasoning? What evidence supports that conclusion? How does this connect to what we discussed earlier? What would happen if we changed one element of this situation?",
+      "example_type": "pure_methodology",
+      "subject_focus": "subject_agnostic",
+      "socratic_metadata": {
+        "source_file": "/home/cgbowen/AIWorkspace/fine_tuning/datasets/processed/pure_methodology_tutoring.jsonl",
+        "line_number": 30,
+        "extraction_timestamp": "2025-08-29T22:22:49.819282",
+        "socratic_confidence": 1.0
+      }
+    },
+    {
+      "instruction": "[SOCRATIC_SCENARIO] Help student recognize their own assumptions (Example 30)",
+      "input": "",
+      "output": "[SOCRATIC_RESPONSE] That's an interesting point. What makes you think that? Can you walk me through your reasoning? What evidence supports that conclusion? How does this connect to what we discussed earlier? What would happen if we changed one element of this situation?",
+      "example_type": "pure_methodology",
+      "subject_focus": "subject_agnostic",
+      "socratic_metadata": {
+        "source_file": "/home/cgbowen/AIWorkspace/fine_tuning/datasets/processed/pure_methodology_tutoring.jsonl",
+        "line_number": 34,
+        "extraction_timestamp": "2025-08-29T22:22:49.819339",
+        "socratic_confidence": 1.0
+      }
+    },
+    {
+      "instruction": "[SOCRATIC_SCENARIO] Help student recognize their own assumptions (Example 16)",
+      "input": "",
+      "output": "[SOCRATIC_RESPONSE] That's an interesting point. What makes you think that? Can you walk me through your reasoning? What evidence supports that conclusion? How does this connect to what we discussed earlier? What would happen if we changed one element of this situation?",
+      "example_type": "pure_methodology",
+      "subject_focus": "subject_agnostic",
+      "socratic_metadata": {
+        "source_file": "/home/cgbowen/AIWorkspace/fine_tuning/datasets/processed/pure_methodology_tutoring.jsonl",
+        "line_number": 49,
+        "extraction_timestamp": "2025-08-29T22:22:49.819554",
+        "socratic_confidence": 1.0
+      }
+    },
+    {
+      "instruction": "[SOCRATIC_SCENARIO] Lead student to connect new and prior knowledge (Example 3)",
+      "input": "",
+      "output": "[SOCRATIC_RESPONSE] That's an interesting point. What makes you think that? Can you walk me through your reasoning? What evidence supports that conclusion? How does this connect to what we discussed earlier? What would happen if we changed one element of this situation?",
+      "example_type": "pure_methodology",
+      "subject_focus": "subject_agnostic",
+      "socratic_metadata": {
+        "source_file": "/home/cgbowen/AIWorkspace/fine_tuning/datasets/processed/pure_methodology_tutoring.jsonl",
+        "line_number": 59,
+        "extraction_timestamp": "2025-08-29T22:22:49.819704",
+        "socratic_confidence": 1.0
+      }
+    },
+    {
+      "instruction": "[SOCRATIC_SCENARIO] Lead student to synthesize information (Example 1)",
+      "input": "",
+      "output": "[SOCRATIC_RESPONSE] That's an interesting point. What makes you think that? Can you walk me through your reasoning? What evidence supports that conclusion? How does this connect to what we discussed earlier? What would happen if we changed one element of this situation?",
+      "example_type": "pure_methodology",
+      "subject_focus": "subject_agnostic",
+      "socratic_metadata": {
+        "source_file": "/home/cgbowen/AIWorkspace/fine_tuning/datasets/processed/pure_methodology_tutoring.jsonl",
+        "line_number": 63,
+        "extraction_timestamp": "2025-08-29T22:22:49.819762",
+        "socratic_confidence": 1.0
+      }
+    }
+  ],
+  "socratic_characteristics": {
+    "average_questions_per_example": 0,
+    "most_common_question_types": [],
+    "typical_socratic_patterns": []
+  }
+}

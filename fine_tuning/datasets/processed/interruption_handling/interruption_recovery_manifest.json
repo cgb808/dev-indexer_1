@@ -1,0 +1,45 @@
+{
+  "total_base": 400,
+  "total_specialized": 100,
+  "interruption_type_distribution_base": {
+    "clarification": 67,
+    "emotion_signal": 67,
+    "lost_context": 67,
+    "multi_turn_probe": 67,
+    "session_end": 65,
+    "topic_shift": 67
+  },
+  "recovery_strategy_distribution_base": {
+    "agnostic_closer": 57,
+    "context_reaffirm": 55,
+    "emotional_ack": 77,
+    "guided_choice": 68,
+    "socratic_probe": 68,
+    "topic_gateway": 75
+  },
+  "controller_label_distribution_base": {
+    "clarify": 73,
+    "close_session": 65,
+    "continue": 62,
+    "gather_info": 68,
+    "pause_resume": 72,
+    "switch_domain": 60
+  },
+  "domains_specialized": {
+    "history": 16,
+    "literature": 23,
+    "mathematics": 14,
+    "programming": 28,
+    "science": 19
+  },
+  "recovery_strategy_distribution_specialized": {
+    "agnostic_closer": 19,
+    "context_reaffirm": 15,
+    "emotional_ack": 19,
+    "guided_choice": 21,
+    "socratic_probe": 11,
+    "topic_gateway": 15
+  },
+  "notes": "Synthetic generation v1. Consider human refinement pass for top quality subset.",
+  "schema_version": "1.0.0"
+}

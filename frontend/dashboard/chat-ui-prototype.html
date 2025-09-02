@@ -1,0 +1,247 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Chat UI Prototype - Dev Dash</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+      /* Basic reset for browser styling */
+      body,
+      #root {
+        margin: 0;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+    </style>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <script src="https://unpkg.com/react-native-web@0.19.11/dist/umd/react-native-web.js"></script>
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+      // Deconstruct necessary components from React and ReactNativeWeb
+      const { useState, useContext, createContext, useEffect } = React;
+      const { View, Text, TextInput, TouchableOpacity, StyleSheet, SafeAreaView, ScrollView } = ReactNativeWeb;
+
+      // --- 1. UI Context for State Management (Unchanged) ---
+      const UIContext = createContext();
+      const UIProvider = ({ children }) => {
+        const [isDarkMode, setIsDarkMode] = useState(true); // Default to dark for dev view
+        const [isDevPanelVisible, setDevPanelVisible] = useState(true); // Default to visible
+
+        const theme = {
+          background: isDarkMode ? '#121212' : '#F5F5F5',
+          text: isDarkMode ? '#E1E1E1' : '#000000',
+          textSecondary: isDarkMode ? '#888' : '#555',
+          card: isDarkMode ? '#1E1E1E' : '#FFFFFF',
+          border: isDarkMode ? '#333' : '#DDD',
+          primary: '#007AFF',
+          placeholder: isDarkMode ? '#888' : '#AAA',
+          green: '#34C759',
+          red: '#FF3B30',
+          orange: '#FF9500',
+        };
+
+        const toggleTheme = () => setIsDarkMode(!isDarkMode);
+        const toggleDevPanel = () => setDevPanelVisible(!isDevPanelVisible);
+
+        return (
+          <UIContext.Provider value={{ theme, isDarkMode, toggleTheme, isDevPanelVisible, toggleDevPanel }}>
+            {children}
+          </UIContext.Provider>
+        );
+      };
+      const useUI = () => useContext(UIContext);
+
+      // --- 2. Dev Panel Components ---
+
+      // New: A reusable component for collapsible sections
+      const CollapsibleSection = ({ title, children }) => {
+        const { theme } = useUI();
+        const [isOpen, setIsOpen] = useState(true);
+
+        return (
+          <View style={styles.sectionContainer}>
+            <TouchableOpacity onPress={() => setIsOpen(!isOpen)} style={styles.sectionHeader}>
+              <Text style={[styles.sectionTitle, { color: theme.text }]}>{title}</Text>
+              <Text style={{ color: theme.text }}>{isOpen ? '▼' : '►'}</Text>
+            </TouchableOpacity>
+            {isOpen && <View style={styles.sectionContent}>{children}</View>}
+          </View>
+        );
+      };
+
+      // New: A component for status indicators
+      const StatusIndicator = ({ label, status = 'ok' }) => {
+        const { theme } = useUI();
+        const statusColor = status === 'ok' ? theme.green : status === 'error' ? theme.red : theme.orange;
+        return (
+          <View style={styles.statusIndicator}>
+            <View style={[styles.statusDot, { backgroundColor: statusColor }]} />
+            <Text style={{ color: theme.textSecondary }}>{label}</Text>
+          </View>
+        );
+      };
+
+      // New: A simulated bar graph for resource usage
+      const ResourceGraph = ({ usage = 0 }) => {
+        const { theme } = useUI();
+        const barWidth = `${Math.max(10, usage)}%`;
+        return (
+          <View style={{ width: '100%', height: 10, backgroundColor: theme.border, borderRadius: 5, marginTop: 4 }}>
+            <View style={{ width: barWidth, height: 10, backgroundColor: theme.primary, borderRadius: 5 }} />
+          </View>
+        );
+      };
+
+      // Expanded: The main DevPanel component
+      const DevPanel = () => {
+        const { theme } = useUI();
+        const [tokensPerSecond, setTokensPerSecond] = useState(0);
+
+        // Effect to simulate live data
+        useEffect(() => {
+          const interval = setInterval(() => {
+            setTokensPerSecond((Math.random() * 30 + 10).toFixed(1));
+          }, 1000);
+          return () => clearInterval(interval);
+        }, []);
+
+        return (
+          <View style={[styles.devPanel, { backgroundColor: theme.card, borderLeftColor: theme.border }]}>
+            <ScrollView>
+              <CollapsibleSection title="Live Metrics">
+                <Text style={[styles.metric, { color: theme.text }]}>
+                  {tokensPerSecond} <Text style={{ color: theme.textSecondary }}>tokens/sec</Text>
+                </Text>
+                <Text style={[styles.metricSub, { color: theme.textSecondary }]}>TTS/STT Usage: 1,234 chars</Text>
+              </CollapsibleSection>
+
+              <CollapsibleSection title="Health Checks">
+                <StatusIndicator label="Docker" status="ok" />
+                <StatusIndicator label="Supabase DB" status="ok" />
+                <StatusIndicator label="Remote API" status="degraded" />
+                <StatusIndicator label="Local Network" status="ok" />
+              </CollapsibleSection>
+
+              <CollapsibleSection title="Local Resources">
+                <Text style={{ color: theme.textSecondary }}>CPU Usage (85%)</Text>
+                <ResourceGraph usage={85} />
+                <Text style={{ color: theme.textSecondary, marginTop: 10 }}>RAM Usage (60%)</Text>
+                <ResourceGraph usage={60} />
+              </CollapsibleSection>
+
+              <CollapsibleSection title="RAG Ingestion">
+                <StatusIndicator label="Status: Idle" status="ok" />
+                <Text style={{ color: theme.textSecondary, marginTop: 4 }}>Docs Indexed: 1,492</Text>
+                <Text style={{ color: theme.textSecondary }}>Last Update: 5:42 AM</Text>
+              </CollapsibleSection>
+            </ScrollView>
+          </View>
+        );
+      };
+
+      // --- 3. Main App Components ---
+      const MessageList = () => {
+        const { theme } = useUI();
+        return (
+          <View style={styles.messageList}>
+            <Text style={{ color: theme.textSecondary }}>The chat UI will go here. The dev panel is on the right.</Text>
+          </View>
+        );
+      };
+      const ChatInput = () => {
+        const { theme } = useUI();
+        return (
+          <View style={[styles.chatInputContainer, { backgroundColor: theme.card, borderTopColor: theme.border }]}>
+            <TouchableOpacity style={styles.iconButton}>
+              <Text style={{ color: theme.text, fontSize: 20 }}>📎</Text>
+            </TouchableOpacity>
+            <TextInput
+              style={[
+                styles.input,
+                { color: theme.text, backgroundColor: theme.background, borderColor: theme.border },
+              ]}
+              placeholder="Type your message..."
+              placeholderTextColor={theme.placeholder}
+            />
+            <TouchableOpacity style={styles.iconButton}>
+              <Text style={{ color: theme.text, fontSize: 20 }}>🎤</Text>
+            </TouchableOpacity>
+          </View>
+        );
+      };
+      const ChatScreen = () => {
+        const { theme, isDarkMode, toggleTheme, isDevPanelVisible, toggleDevPanel } = useUI();
+        return (
+          <SafeAreaView style={[styles.container, { backgroundColor: theme.background }]}>
+            <View style={[styles.header, { backgroundColor: theme.card, borderBottomColor: theme.border }]}>
+              <Text style={[styles.headerTitle, { color: theme.text }]}>Agent Smith</Text>
+              <View style={styles.headerIcons}>
+                <TouchableOpacity onPress={toggleTheme} style={styles.iconButton}>
+                  <Text style={{ color: theme.text, fontSize: 20 }}>{isDarkMode ? '☀️' : '🌙'}</Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={toggleDevPanel} style={styles.iconButton}>
+                  <Text style={{ color: theme.text, fontSize: 18 }}>{`</>`}</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+            <View style={styles.mainContent}>
+              <MessageList />
+              {isDevPanelVisible && <DevPanel />}
+            </View>
+            <ChatInput />
+          </SafeAreaView>
+        );
+      };
+      const App = () => (
+        <UIProvider>
+          <ChatScreen />
+        </UIProvider>
+      );
+
+      // --- 4. Stylesheet (Expanded) ---
+      const styles = StyleSheet.create({
+        container: { flex: 1, height: '100%' },
+        header: {
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          paddingVertical: 10,
+          paddingHorizontal: 15,
+          borderBottomWidth: 1,
+        },
+        headerTitle: { fontSize: 18, fontWeight: 'bold' },
+        headerIcons: { flexDirection: 'row' },
+        mainContent: { flex: 1, flexDirection: 'row' },
+        messageList: { flex: 1, padding: 10, justifyContent: 'center', alignItems: 'center' },
+        devPanel: { width: 280, padding: 10, borderLeftWidth: 1 },
+        chatInputContainer: { flexDirection: 'row', alignItems: 'center', padding: 8, borderTopWidth: 1 },
+        input: { flex: 1, height: 40, borderRadius: 20, paddingHorizontal: 15, marginHorizontal: 8, borderWidth: 1 },
+        iconButton: { padding: 8, marginHorizontal: 5 },
+        // New styles for Dev Panel
+        sectionContainer: { marginBottom: 15, borderBottomWidth: 1, paddingBottom: 10, borderBottomColor: '#2a2a2a' },
+        sectionHeader: {
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          marginBottom: 10,
+        },
+        sectionTitle: { fontWeight: 'bold', fontSize: 14 },
+        sectionContent: { paddingLeft: 5 },
+        metric: { fontSize: 24, fontWeight: '200' },
+        metricSub: { fontSize: 12, marginTop: 4 },
+        statusIndicator: { flexDirection: 'row', alignItems: 'center', marginBottom: 5 },
+        statusDot: { width: 10, height: 10, borderRadius: 5, marginRight: 8 },
+      });
+
+      // --- Mount the App ---
+      const root = ReactDOM.createRoot(document.getElementById('root'));
+      root.render(<App />);
+    </script>
+  </body>
+</html>

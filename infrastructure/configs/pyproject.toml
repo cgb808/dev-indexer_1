@@ -1,0 +1,29 @@
+[tool.mypy]
+python_version = "3.13"
+warn_unused_configs = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+show_error_codes = true
+disable_error_code = "attr-defined"
+exclude = [
+	"ZenGlowAIWorkshop/scripts/memory_rag_bridge.py",
+	"scripts/memory_rag_bridge.py"
+]
+
+[[tool.mypy.overrides]]
+module = ["fastapi.*", "pydantic.*", "redis", "msgpack", "psycopg2", "app.health.system_metrics", "prometheus_client"]
+ignore_missing_imports = true
+
+[tool.ruff]
+select = ["E", "F", "I", "B"]
+line-length = 100
+target-version = "py313"
+exclude = [".venv", "build", "dist"]
+
+[tool.black]
+line-length = 100
+target-version = ["py313"]
+
+[tool.isort]
+profile = "black"
+line_length = 100

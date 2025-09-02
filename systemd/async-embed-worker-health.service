@@ -1,0 +1,18 @@
+[Unit]
+Description=Async Embedding Worker Health API
+After=network.target async-embed-worker.service
+
+[Service]
+Type=simple
+Environment=APP_ENV=prod
+Environment=SERVICE_NAME=async-embed-worker-health
+Environment=WORKER_HEALTH_FILE=/var/run/zenglow/async_embed_worker.health
+WorkingDirectory=/opt/zenglow
+ExecStart=/usr/bin/uvicorn dev-indexer_1.scripts.worker_health_api:app --host 0.0.0.0 --port 9108
+Restart=always
+RestartSec=5
+StandardOutput=append:/var/log/zenglow/async_embed_worker_health.log
+StandardError=append:/var/log/zenglow/async_embed_worker_health.err
+
+[Install]
+WantedBy=multi-user.target

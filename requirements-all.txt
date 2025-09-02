@@ -1,0 +1,37 @@
+############################################
+# Unified Environment Requirements (Single venv)
+# Combines: runtime (infrastructure/configs/requirements.txt), training, embedding, dev/tooling.
+# Generated 2025-08-31. Edit component lists in their original files; then regenerate.
+############################################
+
+# --- Core & Runtime ---
+-r infrastructure/configs/requirements.txt
+
+# --- Training / Fine-tune Extras ---
+torch>=2.2.0
+transformers>=4.41.0
+sentence-transformers>=2.7.0
+accelerate>=0.31.0
+peft>=0.11.0
+bitsandbytes>=0.43.0 ; platform_system == 'Linux'
+scikit-learn
+pandas
+
+# --- Embedding Service Minimal (duplicate dedupe handled by pip) ---
+sentence-transformers
+
+# --- Dev / Tooling ---
+ruff
+black
+isort
+mypy
+pytest-cov
+ipython
+pre-commit
+types-requests
+types-redis
+
+# Notes:
+# - Prefer this file for single-venv bootstrap: `pip install -r requirements-all.txt`.
+# - Keep specialized files for selective / slim installs.
+# - After updating component files, refresh this aggregation manually (simple copy/merge procedure).

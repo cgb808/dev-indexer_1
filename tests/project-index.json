@@ -1,0 +1,65 @@
+{
+  "summary": "Indexed project structure for ZenGlow AI workspace (includes clarifying priority and hygiene tooling)",
+  "timestamp": "2025-08-27T00:00:00Z",
+  "root": {
+    "app": {
+      "description": "FastAPI application with RAG pipeline, audio transcription and TTS, metrics, diagnostics, and config endpoints.",
+      "main_modules": [
+        "main.py (FastAPI entrypoint, mounts routers, static assets)",
+        "personas.py (persona templates)",
+        "rag/ (retrieval augmented generation pipeline components)",
+        "core/ (config, metrics, diagnostics, logging, redis cache, secrets)",
+        "audio/ (transcription_router.py, tts_router.py)"
+      ],
+      "rag": {
+        "components": [
+          "pipeline.py (RAGPipeline orchestrator)",
+          "retrieval.py (vector retrieval logic)",
+          "embedder.py / embeddings.py (embedding generation and model abstraction)",
+          "feature_assembler.py (feature engineering before ranking)",
+          "ltr.py (learning-to-rank scoring)",
+          "llm_client.py (multi-backend LLM selection: Supabase Edge, llama.cpp server, Ollama, dev fake)",
+          "edge_llm.py (legacy fallback)",
+          "ranking_router.py (HTTP interface for RAG scoring endpoints)",
+          "schemas.py (Pydantic models)",
+          "store_pg.py / db_client.py (Postgres + pgvector integration)"
+        ]
+      },
+      "core": {
+        "modules": [
+          "config.py (env handling + backward compat shim)",
+          "metrics.py / metrics_router.py (in-process counters/histograms + /metrics endpoints)",
+          "diagnostics_router.py (runtime diagnostics)",
+          "logging.py & log_buffer.py (structured logging + in-memory capture)",
+          "redis_cache.py (Redis caching abstraction)",
+          "secrets.py (Supabase key bootstrap)"
+        ]
+      }
+    },
+    "frontend": {
+      "dashboard": "Vite + React app with pages Dashboard and GemmaPhi (chat UI)."
+    },
+    "docker": {
+      "files": ["Dockerfile", "docker-compose.yml"],
+      "note": "docker-compose currently not runnable (docker-compose not installed)."
+    },
+    "supporting": {
+      "scripts/": "Utility scripts (finetuning, memory rag bridge, current affairs, hygiene check, clarify priority dataset builder).",
+      "models/": "Model download scripts (ggml/gguf).",
+  "docs/": "Architecture and integration documentation (RAG, memory, retrieval). See DOCS_INDEX.md for navigation. Root hygiene audit tracked in docs/ROOT_HYGIENE_AUDIT.md.",
+  "infrastructure/schemas/": "Service / vector DB schema definitions (e.g., hybrid_schema.json) relocated from root for hygiene.",
+      "tests/": "Pytest suite (includes clarifying priority feature tests).",
+      "clarify_priority": "Files: scripts/build_clarify_priority_dataset.py, app/rag/clarify_priority_features.py (feature extraction), heuristic priority integrated in scripts/rag_ingest.py"
+    }
+  },
+  "documentation_index": "docs/DOCS_INDEX.md",
+  "llm_client_backends": ["Supabase Edge Functions (get_gemma_response, etc.)", "llama.cpp HTTP server", "Ollama local model (default gemma:2b)", "DEV_FAKE_LLM fallback"],
+  "next_steps": [
+    "Install docker engine / compose plugin for container orchestration if needed.",
+    "Decide target chat model (update OLLAMA_MODEL or Supabase Edge fn list).",
+    "Wire GemmaPhi.tsx front-end to /rag/query and persona/config endpoints.",
+    "Add streaming and speech (optional) after basic text flow works.",
+    "Train tiny clarifying priority model using newly generated weak label dataset.",
+    "Add CI guard invoking scripts/root_hygiene_check.py to prevent stray root files."
+  ]
+}

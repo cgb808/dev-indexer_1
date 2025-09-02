@@ -1,0 +1,50 @@
+# Multi-Repo Sync Manifest
+# Defines which paths from this workspace should be synchronized to the secondary repo (e.g. AIWorkshop).
+# Format:
+#   [includes]  (one path or glob per line, relative to repo root)
+#   [excludes]  (one path or glob per line)
+# Globs are rsync-compatible. Empty lines and lines starting with # are ignored.
+
+[includes]
+README.md
+COPILOT.md
+pyproject.toml
+requirements*.txt
+package.json
+tsconfig.json
+sync.sh
+quick_sync.sh
+remote_cuda_simple.sh
+remote_data.sh
+cuda_aliases.sh
+FILE_TRANSFER_README.md
+CUDA_REMOTE_GUIDE.md
+app/
+scripts/
+docs/PROJECT_OVERVIEW.md
+docs/ARCHITECTURE_OVERVIEW.md
+docs/MULTI_AGENT_ARCHITECTURE.md
+docs/MEMORY_RAG_INTEGRATION.md
+docs/EMBEDDING_MODEL_PIPELINE.md
+docs/MULTI_ROOT_WORKSPACE.md
+
+[excludes]
+.git/
+node_modules/
+__pycache__/
+.mypy_cache/
+.ruff_cache/
+.pytest_cache/
+.venv/
+data/
+artifact/
+Artifact/
+models/weights/
+*.log
+*.tmp
+*.swp
+*.swo
+*.pyc
+*.ipynb_checkpoints/
+*.tar.gz
+*.zip

@@ -1,0 +1,190 @@
+{
+  "user_input": "Plot y = sin(x)",
+  "tool_classification": {
+    "primary_category": "MATHEMATICAL",
+    "tools_needed": [
+      "graphing",
+      "latex_renderer"
+    ],
+    "specialist_required": "phi3_mathematics_tutor",
+    "confidence": 0.85,
+    "voice_preference": "jarvis",
+    "parameters": {
+      "function": "sin(x)",
+      "equation_type": "algebraic"
+    }
+  }
+}
+
+{
+  "user_input": "Graph the function y = x^2 + 2x - 3",
+  "tool_classification": {
+    "primary_category": "MATHEMATICAL",
+    "tools_needed": [
+      "graphing",
+      "latex_renderer"
+    ],
+    "specialist_required": "phi3_mathematics_tutor",
+    "confidence": 0.9,
+    "voice_preference": "jarvis",
+    "parameters": {
+      "function": "x^2 + 2x - 3",
+      "equation_type": "algebraic",
+      "numbers": [
+        2.0,
+        2.0,
+        3.0
+      ]
+    }
+  }
+}
+
+{
+  "user_input": "Find x when 2x + 7 = 15",
+  "tool_classification": {
+    "primary_category": "MATHEMATICAL",
+    "tools_needed": [
+      "calculator"
+    ],
+    "specialist_required": "phi3_mathematics_tutor",
+    "confidence": 0.91,
+    "voice_preference": "jarvis",
+    "parameters": {
+      "equation_type": "algebraic",
+      "numbers": [
+        2.0,
+        7.0,
+        15.0
+      ]
+    }
+  }
+}
+
+{
+  "user_input": "Can we work on writing?",
+  "tool_classification": {
+    "primary_category": "WORKFLOW",
+    "tools_needed": [
+      "task_sequence"
+    ],
+    "specialist_required": "phi3_workflow_orchestrator",
+    "confidence": 0.87,
+    "voice_preference": "alan",
+    "parameters": {
+      "workflow_type": "general",
+      "complexity": "medium"
+    }
+  }
+}
+
+{
+  "user_input": "Wait",
+  "tool_classification": {
+    "primary_category": "AUDIO",
+    "tools_needed": [
+      "audio_pause"
+    ],
+    "specialist_required": "phi3_conversation_handler",
+    "confidence": 0.98,
+    "voice_preference": "amy",
+    "parameters": {
+      "action_type": "pause",
+      "immediate_execution": true
+    }
+  }
+}
+
+{
+  "user_input": "Find information about calculus and explain with diagrams",
+  "tool_classification": {
+    "primary_category": "SEARCH",
+    "tools_needed": [
+      "rag_search",
+      "vector_query"
+    ],
+    "specialist_required": "phi3_knowledge_retriever",
+    "confidence": 0.88,
+    "voice_preference": "jarvis",
+    "parameters": {
+      "complexity": "high",
+      "multi_category": true
+    }
+  }
+}
+
+{
+  "user_input": "Graph the parabola y = -x^2 + 4",
+  "tool_classification": {
+    "primary_category": "MATHEMATICAL",
+    "tools_needed": [
+      "graphing",
+      "latex_renderer"
+    ],
+    "specialist_required": "phi3_mathematics_tutor",
+    "confidence": 0.93,
+    "voice_preference": "jarvis",
+    "parameters": {
+      "function": "-x^2 + 4",
+      "equation_type": "algebraic",
+      "numbers": [
+        2.0,
+        4.0
+      ]
+    }
+  }
+}
+
+{
+  "user_input": "Save my progress",
+  "tool_classification": {
+    "primary_category": "WORKFLOW",
+    "tools_needed": [
+      "session_manage",
+      "progress_track"
+    ],
+    "specialist_required": "phi3_workflow_orchestrator",
+    "confidence": 0.83,
+    "voice_preference": "alan",
+    "parameters": {
+      "workflow_type": "session",
+      "complexity": "medium"
+    }
+  }
+}
+
+{
+  "user_input": "Draw a triangle",
+  "tool_classification": {
+    "primary_category": "VISUAL",
+    "tools_needed": [
+      "canvas_draw",
+      "diagram_create"
+    ],
+    "specialist_required": "phi3_visual_explainer",
+    "confidence": 0.96,
+    "voice_preference": "alan",
+    "parameters": {
+      "visual_type": "drawing",
+      "complexity": "medium"
+    }
+  }
+}
+
+{
+  "user_input": "Tell me about the American Revolution",
+  "tool_classification": {
+    "primary_category": "SEARCH",
+    "tools_needed": [
+      "knowledge_lookup",
+      "vector_query"
+    ],
+    "specialist_required": "phi3_knowledge_retriever",
+    "confidence": 0.87,
+    "voice_preference": "jarvis",
+    "parameters": {
+      "search_type": "knowledge",
+      "query_complexity": "medium"
+    }
+  }
+}
+

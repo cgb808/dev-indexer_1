@@ -1,0 +1,21 @@
+[Unit]
+Description=Async Embedding Worker (conversation_events)
+After=network.target
+Wants=postgresql.service redis.service
+
+[Service]
+Type=simple
+Environment=APP_ENV=prod
+Environment=SERVICE_NAME=async-embed-worker
+Environment=EMBED_ENDPOINT=http://127.0.0.1:8000/model/embed
+# DATABASE_URL should be provided via EnvironmentFile for security
+EnvironmentFile=/etc/zenglow/embedding-worker.env
+WorkingDirectory=/opt/zenglow
+ExecStart=/usr/bin/python3 dev-indexer_1/scripts/async_embedding_worker.py --batch-size 64 --poll-interval 5 --hash-content --health-file /var/run/zenglow/async_embed_worker.health
+Restart=always
+RestartSec=5
+StandardOutput=append:/var/log/zenglow/async_embed_worker.log
+StandardError=append:/var/log/zenglow/async_embed_worker.err
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,81 @@
+{
+  "extraction_timestamp": "2025-08-29T14:32:07.959816",
+  "source_file": "/home/cgbowen/AIWorkspace/fine_tuning/datasets/processed/hybrid/hybrid_methodology_math_dataset.jsonl",
+  "total_pure_methodology": 500,
+  "total_math_with_methodology": 500,
+  "methodology_breakdown": {
+    "unknown": 500
+  },
+  "sample_examples": [
+    {
+      "instruction": "[SOCRATIC_SCENARIO] Help student recognize their own assumptions (Example 10)",
+      "input": "",
+      "output": "[SOCRATIC_RESPONSE] That's an interesting point. What makes you think that? Can you walk me through your reasoning? What evidence supports that conclusion? How does this connect to what we discussed earlier? What would happen if we changed one element of this situation?",
+      "example_type": "pure_methodology",
+      "subject_focus": "subject_agnostic"
+    },
+    {
+      "instruction": "[ADAPTATION_SCENARIO] Student needs frequent encouragement (Case 30)",
+      "input": "",
+      "output": "[ADAPTIVE_RESPONSE] I notice you learn best when we approach this differently. Let me adjust my teaching style to match how you process information. This isn't about changing the content - it's about finding the path that works best for your learning style.",
+      "example_type": "pure_methodology",
+      "subject_focus": "subject_agnostic"
+    },
+    {
+      "instruction": "[SOCRATIC_SCENARIO] Encourage student to generate examples (Example 7)",
+      "input": "",
+      "output": "[SOCRATIC_RESPONSE] That's an interesting point. What makes you think that? Can you walk me through your reasoning? What evidence supports that conclusion? How does this connect to what we discussed earlier? What would happen if we changed one element of this situation?",
+      "example_type": "pure_methodology",
+      "subject_focus": "subject_agnostic"
+    },
+    {
+      "instruction": "[TUTORING_SCENARIO] Student is distracted and unfocused (Variation 14)",
+      "input": "",
+      "output": "[METHODOLOGY_RESPONSE] Let me guide you through this step by step. First, let's identify what specific part needs clarification. Can you point to where your understanding starts to feel uncertain? This helps me tailor my explanation to your exact needs and build from what you already know.",
+      "example_type": "pure_methodology",
+      "subject_focus": "subject_agnostic"
+    },
+    {
+      "instruction": "[SOCRATIC_SCENARIO] Lead student to connect new and prior knowledge (Example 8)",
+      "input": "",
+      "output": "[SOCRATIC_RESPONSE] That's an interesting point. What makes you think that? Can you walk me through your reasoning? What evidence supports that conclusion? How does this connect to what we discussed earlier? What would happen if we changed one element of this situation?",
+      "example_type": "pure_methodology",
+      "subject_focus": "subject_agnostic"
+    },
+    {
+      "instruction": "[TUTORING_SCENARIO] Student asks for the answer directly (Variation 7)",
+      "input": "",
+      "output": "[METHODOLOGY_RESPONSE] Let me guide you through this step by step. First, let's identify what specific part needs clarification. Can you point to where your understanding starts to feel uncertain? This helps me tailor my explanation to your exact needs and build from what you already know.",
+      "example_type": "pure_methodology",
+      "subject_focus": "subject_agnostic"
+    },
+    {
+      "instruction": "[TUTORING_SCENARIO] Student rushes through work carelessly (Variation 4)",
+      "input": "",
+      "output": "[METHODOLOGY_RESPONSE] Let me guide you through this step by step. First, let's identify what specific part needs clarification. Can you point to where your understanding starts to feel uncertain? This helps me tailor my explanation to your exact needs and build from what you already know.",
+      "example_type": "pure_methodology",
+      "subject_focus": "subject_agnostic"
+    },
+    {
+      "instruction": "[TUTORING_SCENARIO] Student compares themselves negatively to others (Variation 12)",
+      "input": "",
+      "output": "[METHODOLOGY_RESPONSE] Let me guide you through this step by step. First, let's identify what specific part needs clarification. Can you point to where your understanding starts to feel uncertain? This helps me tailor my explanation to your exact needs and build from what you already know.",
+      "example_type": "pure_methodology",
+      "subject_focus": "subject_agnostic"
+    },
+    {
+      "instruction": "[ADAPTATION_SCENARIO] Student has learning differences (Case 4)",
+      "input": "",
+      "output": "[ADAPTIVE_RESPONSE] I notice you learn best when we approach this differently. Let me adjust my teaching style to match how you process information. This isn't about changing the content - it's about finding the path that works best for your learning style.",
+      "example_type": "pure_methodology",
+      "subject_focus": "subject_agnostic"
+    },
+    {
+      "instruction": "[ADAPTATION_SCENARIO] Student prefers collaborative learning (Case 16)",
+      "input": "",
+      "output": "[ADAPTIVE_RESPONSE] I notice you learn best when we approach this differently. Let me adjust my teaching style to match how you process information. This isn't about changing the content - it's about finding the path that works best for your learning style.",
+      "example_type": "pure_methodology",
+      "subject_focus": "subject_agnostic"
+    }
+  ]
+}

@@ -1,0 +1,69 @@
+{
+  "folders": [
+	{
+		"path": "."
+	}
+],
+  "settings": {
+    "github.copilot.enable": {
+      "*": true,
+      "yaml": true,
+      "plaintext": true,
+      "markdown": true,
+      "jupyter": true,
+      "python": true,
+      "typescript": true,
+      "javascript": true
+    },
+    "notebook.cellToolbarLocation": {
+      "default": "right",
+      "jupyter-notebook": "left"
+    },
+    "notebook.showCellStatusBar": "visibleAfterExecute",
+    "notebook.lineNumbers": "on",
+    "notebook.output.textLineLimit": 50,
+    "notebook.formatOnSave.enabled": true,
+    "workbench.editor.customLabels.patterns": {
+      "**/*.ipynb": "${dirname}/${filename} 📓",
+      "**/notebooks/*.ipynb": "📊 ${filename}",
+      "**/data_analysis/*.ipynb": "📈 ${filename}",
+      "**/sensor_data/*.ipynb": "🔌 ${filename}",
+      "**/api_analysis/*.ipynb": "🚪 ${filename}",
+      "**/ml_models/*.ipynb": "🤖 ${filename}",
+      "**/*sensor*.ipynb": "🔌 ${filename}",
+      "**/*api*.ipynb": "🚪 ${filename}",
+      "**/*ml*.ipynb": "🤖 ${filename}",
+      "**/*data*.ipynb": "📊 ${filename}",
+      "**/*analysis*.ipynb": "📈 ${filename}",
+      "**/*demo*.ipynb": "🎯 ${filename}",
+      "**/*tutorial*.ipynb": "📚 ${filename}",
+      "**/*.py": "${dirname}/${filename} 🐍",
+      "**/*.ts": "${dirname}/${filename} ⚡",
+      "**/*.js": "${dirname}/${filename} 💛",
+      "**/*.lua": "${dirname}/${filename} 🌙",
+      "**/*.yml": "${dirname}/${filename} ⚙️",
+      "**/*.yaml": "${dirname}/${filename} ⚙️",
+      "**/*.json": "${dirname}/${filename} 📋",
+      "**/*.md": "${dirname}/${filename} 📝",
+      "**/docker-compose*.yml": "🐳 ${filename}",
+      "**/Dockerfile*": "🐳 ${filename}",
+      "**/requirements*.txt": "📦 ${filename}",
+      "**/package*.json": "📦 ${filename}"
+    },
+    "files.associations": {
+      "*.ipynb": "jupyter-notebook",
+      "*.py": "python",
+      "*.pyi": "python",
+      "*.yaml": "yaml",
+      "*.yml": "yaml"
+    },
+    "terminal.integrated.defaultProfile.linux": "bash",
+    "terminal.integrated.profiles.linux": {
+      "ZenGlow Dev": {
+        "path": "/bin/bash",
+        "args": ["-c", "source .venv/bin/activate && exec bash"]
+      }
+    },
+    "git.confirmSync": false
+  }
+}

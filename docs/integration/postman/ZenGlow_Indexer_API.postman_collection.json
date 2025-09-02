@@ -1,0 +1,104 @@
+{
+  "info": {
+    "name": "ZenGlow Indexer API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Health Root",
+      "request": {
+        "method": "GET",
+        "url": "http://localhost:8000/health"
+      }
+    },
+    {
+      "name": "Health Ollama",
+      "request": {
+        "method": "GET",
+        "url": "http://localhost:8000/health/ollama"
+      }
+    },
+    {
+      "name": "Health DB",
+      "request": {
+        "method": "GET",
+        "url": "http://localhost:8000/health/db"
+      }
+    },
+    {
+      "name": "Model Status",
+      "request": {
+        "method": "GET",
+        "url": "http://localhost:8000/model/status"
+      }
+    },
+    {
+      "name": "Embed",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"texts\": [\"hello world\"]\n}"
+        },
+        "url": "http://localhost:8000/model/embed"
+      }
+    },
+    {
+      "name": "Ollama Proxy",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"prompt\": \"ping\"\n}"
+        },
+        "url": "http://localhost:8000/model/ollama"
+      }
+    },
+    {
+      "name": "RAG Ingest",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"source\": \"docs\",\n  \"documents\": [\"Sample text chunk A\", \"Sample text chunk B\"]\n}"
+        },
+        "url": "http://localhost:8000/rag/ingest"
+      }
+    },
+    {
+      "name": "RAG Query",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"query\": \"Explain sample text\",\n  \"top_k\": 3\n}"
+        },
+        "url": "http://localhost:8000/rag/query"
+      }
+    }
+  ]
+}

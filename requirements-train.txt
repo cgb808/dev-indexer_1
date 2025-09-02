@@ -1,0 +1,18 @@
+# Training / fine-tuning extra dependencies (not needed for core API runtime)
+# Install with: pip install -r requirements-train.txt
+# Keep versions reasonably pinned for reproducibility while allowing security updates via upper constraints later.
+
+torch>=2.2.0
+transformers>=4.41.0
+sentence-transformers>=2.7.0
+accelerate>=0.31.0
+peft>=0.11.0
+bitsandbytes>=0.43.0 ; platform_system == 'Linux'
+scikit-learn
+numpy
+pandas
+
+# Rationale:
+# - Use relaxed lower bounds so existing infra/requirements pins (e.g., transformers==4.43.2) satisfy them.
+# - bitsandbytes only on Linux to avoid installation friction on unsupported platforms.
+# - numpy listed to ensure consistent version when training outside core runtime env.

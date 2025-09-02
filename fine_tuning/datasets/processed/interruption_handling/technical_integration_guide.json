@@ -1,0 +1,17 @@
+{
+  "interruption_token": "[USER_INTERRUPTION]",
+  "purpose": "Technical marker for Application Controller to detect when user interrupts during TTS playback",
+  "implementation": {
+    "detection": "Monitor microphone during TTS playback",
+    "action": "Immediately pause/stop TTS when user voice detected",
+    "processing": "Send interrupted text + user input to model with [USER_INTERRUPTION] token"
+  },
+  "training_examples": 65,
+  "session_management_examples": 6,
+  "total_examples": 71,
+  "file_locations": {
+    "interruption_handling": "/home/cgbowen/AIWorkspace/fine_tuning/datasets/processed/interruption_handling/interruption_handling_training.jsonl",
+    "session_management": "/home/cgbowen/AIWorkspace/fine_tuning/datasets/processed/interruption_handling/session_management_training.jsonl",
+    "combined_dataset": "/home/cgbowen/AIWorkspace/fine_tuning/datasets/processed/interruption_handling/combined_interruption_session_training.jsonl"
+  }
+}

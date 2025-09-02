@@ -1,0 +1,109 @@
+{
+  "data_analyzer_config": {
+    "analysis_capabilities": [
+      "performance_optimization",
+      "usage_pattern_analysis", 
+      "educational_effectiveness",
+      "resource_utilization",
+      "predictive_modeling"
+    ],
+    "data_sources": {
+      "academic_domains": {
+        "mathematics": "fine_tuning/datasets/academic_domains/mathematics",
+        "science": "fine_tuning/datasets/academic_domains/science", 
+        "english": "fine_tuning/datasets/academic_domains/english",
+        "history": "fine_tuning/datasets/academic_domains/history",
+        "art": "fine_tuning/datasets/academic_domains/art",
+        "foreign_language": "fine_tuning/datasets/academic_domains/foreign_language"
+      },
+      "tool_usage": "logs/tool_usage",
+      "performance_metrics": "logs/performance",
+      "user_interactions": "logs/interactions"
+    },
+    "real_time_analysis": {
+      "enabled": true,
+      "analysis_window_minutes": 5,
+      "alert_thresholds": {
+        "response_time_ms": 500,
+        "error_rate_percent": 5,
+        "resource_utilization_percent": 85
+      }
+    }
+  },
+  "insights_generation": {
+    "educational_effectiveness": {
+      "track_learning_outcomes": true,
+      "measure_engagement": true,
+      "adaptive_difficulty": true,
+      "personalization_recommendations": true
+    },
+    "system_optimization": {
+      "routing_efficiency": true,
+      "resource_allocation": true,
+      "caching_strategies": true,
+      "load_balancing": true
+    },
+    "predictive_analytics": {
+      "demand_forecasting": true,
+      "failure_prediction": true,
+      "capacity_planning": true,
+      "trend_analysis": true
+    }
+  },
+  "reporting": {
+    "dashboards": {
+      "real_time_performance": true,
+      "educational_analytics": true,
+      "system_health": true,
+      "usage_statistics": true
+    },
+    "automated_reports": {
+      "daily_summary": true,
+      "weekly_trends": true,
+      "monthly_analysis": true,
+      "quarterly_insights": true
+    },
+    "export_formats": ["json", "csv", "pdf"]
+  },
+  "machine_learning": {
+    "models": {
+      "performance_prediction": {
+        "enabled": true,
+        "retrain_frequency_hours": 24,
+        "feature_sources": ["usage_patterns", "system_metrics", "user_feedback"]
+      },
+      "educational_recommendation": {
+        "enabled": true,
+        "retrain_frequency_hours": 168,
+        "feature_sources": ["learning_progress", "interaction_patterns", "domain_performance"]
+      },
+      "resource_optimization": {
+        "enabled": true,
+        "retrain_frequency_hours": 12,
+        "feature_sources": ["resource_usage", "request_patterns", "system_load"]
+      }
+    },
+    "training_data": {
+      "retention_days": 90,
+      "minimum_samples": 1000,
+      "validation_split": 0.2
+    }
+  },
+  "integration": {
+    "mistral_7b_orchestrator": {
+      "analysis_endpoint": "/api/data_analyzer/insights",
+      "real_time_feed": true,
+      "recommendation_api": "/api/data_analyzer/recommendations"
+    },
+    "academic_specialists": {
+      "performance_feedback": true,
+      "optimization_suggestions": true,
+      "adaptive_parameters": true
+    },
+    "tool_director": {
+      "usage_analytics": true,
+      "optimization_recommendations": true,
+      "resource_planning": true
+    }
+  }
+}

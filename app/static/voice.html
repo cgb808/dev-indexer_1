@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Voice Assistant</title>
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<style>
+:root { --bg:#0f1115; --bg-alt:#15191f; --panel:#1e242c; --border:#2b333e; --text:#e6e9ef; --accent:#4b6ef5; --accent2:#8758ff; }
+body { margin:0; font-family:system-ui, -apple-system, Segoe UI, Roboto, sans-serif; background:var(--bg); color:var(--text); min-height:100vh; display:flex; flex-direction:column; }
+header { display:flex; align-items:center; padding:.85rem 1rem; gap:.85rem; background:var(--bg-alt); border-bottom:1px solid var(--border); }
+header h1 { font-size:1.1rem; margin:0; font-weight:600; }
+nav a { color:var(--accent); text-decoration:none; font-size:.85rem; padding:.35rem .6rem; border-radius:6px; }
+nav a:hover { background:var(--panel); }
+main { width:100%; max-width:980px; margin:0 auto; padding:1rem clamp(.75rem,2vw,1.5rem); display:flex; flex-direction:column; gap:1.2rem; }
+.panel { background:var(--panel); border:1px solid var(--border); border-radius:14px; padding:1rem 1rem 1.15rem; display:flex; flex-direction:column; gap:.85rem; }
+button { background:var(--accent); border:none; color:#fff; padding:.65rem 1.1rem; border-radius:10px; font:inherit; cursor:pointer; font-weight:500; display:inline-flex; align-items:center; gap:.4rem; }
+button.secondary { background:#2d3643; }
+button.danger { background:#d64245; }
+button:disabled { opacity:.6; cursor:not-allowed; }
+select, textarea, input { background:#222a33; border:1px solid var(--border); padding:.65rem .75rem; border-radius:8px; color:var(--text); font:inherit; }
+textarea { resize:vertical; }
+#log { font-size:.7rem; white-space:pre-wrap; background:#101317; border:1px solid var(--border); border-radius:8px; padding:.6rem .7rem; height:140px; overflow:auto; line-height:1.25; }
+#transcript { background:#101317; border:1px solid var(--border); border-radius:10px; padding:.85rem .9rem; min-height:110px; white-space:pre-wrap; line-height:1.3; font-size:.9rem; }
+#answer { background:#101317; border:1px solid var(--border); border-radius:10px; padding:.85rem .9rem; min-height:110px; white-space:pre-wrap; line-height:1.3; font-size:.9rem; }
+.flex { display:flex; gap:.75rem; align-items:center; flex-wrap:wrap; }
+.progress { height:4px; background:#222; border-radius:3px; overflow:hidden; }
+.progress span { display:block; height:100%; width:0; background:linear-gradient(90deg,var(--accent),var(--accent2)); transition:width .25s; }
+.badge { font-size:.55rem; letter-spacing:.6px; background:#222a33; padding:.35rem .55rem; border-radius:20px; text-transform:uppercase; }
+.toggle { position:relative; width:36px; height:20px; }
+.toggle input { opacity:0; width:0; height:0; }
+.toggle span { position:absolute; inset:0; background:#2a323c; border:1px solid #39424f; border-radius:30px; cursor:pointer; transition:.25s; }
+.toggle span:before { content:""; position:absolute; width:16px; height:16px; background:#7d8b9b; top:1px; left:1px; border-radius:50%; transition:.25s; }
+.toggle input:checked + span { background:var(--accent); border-color:var(--accent); }
+.toggle input:checked + span:before { transform:translateX(16px); background:#fff; }
+small { color:#7c8996; }
+@media (max-width:700px){ main { padding:1rem; } }
+</style>
+</head>
+<body>
+<header>
+  <h1>Voice Assistant</h1>
+  <nav style="margin-left:auto; display:flex; gap:.75rem;">
+    <a href="/static/index.html">Chat</a>
+    <a href="/static/voice.html" style="background:#222a33;">Voice</a>
+  <a href="/static/dashboard/index.html">Metrics</a>
+  </nav>
+</header>
+<main>
+  <div id="permissionMessage" style="display:none; font-size:.7rem; background:#402a2a; padding:.5rem .7rem; border:1px solid #5a3434; border-radius:8px; line-height:1.3;"></div>
+  <div id="textControls" style="display:none; margin:0 0 1rem;">
+    <div style="display:flex; flex-direction:column; gap:.5rem; background:#1e242c; border:1px solid var(--border); padding: .85rem 1rem; border-radius:14px;">
+      <strong style="font-size:.75rem; letter-spacing:.6px;">Text Fallback Mode</strong>
+      <textarea id="textFallback" rows="3" placeholder="Type your question..." style="width:100%;"></textarea>
+      <div style="display:flex; gap:.5rem;">
+        <button id="textSendBtn">Send</button>
+        <button id="retryMicBtn" class="secondary">Enable Microphone</button>
+      </div>
+    </div>
+  </div>
+  <div style="margin:0 0 1rem;" id="preMicPrompt">
+    <button id="getDevicesBtn">Enable Microphone</button>
+  </div>
+  <div id="voiceControls" style="display:none;">
+    <div class="panel" id="recPanel">
+      <div class="flex" style="align-items:flex-start;">
+        <div style="display:flex; flex-direction:column; gap:.55rem;">
+          <div class="flex">
+            <button id="recordBtn">Record</button>
+            <button id="stopBtn" disabled class="secondary">Stop</button>
+            <button id="cancelBtn" disabled class="secondary">Cancel</button>
+          </div>
+          <div class="flex" style="font-size:.65rem;">
+            <label class="flex" style="gap:.4rem; align-items:center;">Auto-Send
+              <label class="toggle"><input type="checkbox" id="autoSendToggle" checked><span></span></label>
+            </label>
+            <label class="flex" style="gap:.4rem; align-items:center;">Auto-TTS
+              <label class="toggle"><input type="checkbox" id="autoTTSToggle" checked><span></span></label>
+            </label>
+            <label class="flex" style="gap:.4rem; align-items:center;">Show Logs
+              <label class="toggle"><input type="checkbox" id="logsToggle" checked><span></span></label>
+            </label>
+          </div>
+          <div class="flex" style="font-size:.65rem;">
+            <label style="display:flex; flex-direction:column; gap:.25rem; font-size:.65rem;">Backend
+              <select id="backendSel" style="min-width:120px;">
+                <option value="auto">Auto</option>
+                <option value="edge">Edge</option>
+                <option value="llama">llama.cpp</option>
+                <option value="ollama">Ollama</option>
+              </select>
+            </label>
+            <label style="display:flex; flex-direction:column; gap:.25rem; font-size:.65rem;">Top K
+              <input type="number" id="topk" value="5" min="1" max="15" style="width:70px;" />
+            </label>
+            <label style="display:flex; flex-direction:column; gap:.25rem; font-size:.65rem;">Persona
+              <select id="personaSel" style="min-width:120px;">
+                <option value="british_butler">Butler</option>
+                <option value="neutral">Neutral</option>
+                <option value="fun_supportive">Fun</option>
+                <option value="terse_expert">Terse</option>
+              </select>
+            </label>
+            <label style="display:flex; flex-direction:column; gap:.25rem; font-size:.65rem;">Lang
+              <select id="lang" style="min-width:90px;">
+                <option value="">Auto</option>
+                <option value="en">English</option>
+                <option value="es">Spanish</option>
+                <option value="de">German</option>
+              </select>
+            </label>
+            <label style="display:flex; flex-direction:column; gap:.25rem; font-size:.65rem;">Voice
+              <select id="voiceSel" style="min-width:140px;">
+                <option value="southern_male" selected>SouthernMale</option>
+                <option value="alan">Alan</option>
+                <option value="jarvis">Jarvis</option>
+                <option value="amy">Amy</option>
+              </select>
+            </label>
+            <label style="display:flex; flex-direction:column; gap:.25rem; font-size:.65rem;">Speed
+              <input id="speedInput" type="number" step="0.05" min="0.5" max="1.5" value="0.90" style="width:70px;" />
+            </label>
+          </div>
+        </div>
+        <div style="flex:1; display:flex; flex-direction:column; gap:.4rem;">
+          <div class="progress"><span id="prog"></span></div>
+          <div id="log"></div>
+        </div>
+      </div>
+      <small>Recording uses WebM chunks; server converts & transcribes via whisper.cpp. 30s visual cap.</small>
+    </div>
+
+    <div class="panel">
+      <h3 style="margin:.3rem 0 .2rem; font-size:.75rem; letter-spacing:.6px; text-transform:uppercase;">Transcript</h3>
+      <div id="transcript"></div>
+    </div>
+
+    <div class="panel">
+      <h3 style="margin:.3rem 0 .2rem; font-size:.75rem; letter-spacing:.6px; text-transform:uppercase;">Answer</h3>
+      <div id="answer"></div>
+      <audio id="ttsAudio" controls style="margin-top:.5rem; width:100%; display:none;"></audio>
+    </div>
+  </div>
+</main>
+<footer style="margin-top:auto; padding:2rem 1rem 3rem; text-align:center; font-size:.65rem; opacity:.55;">Local voice chain: Whisper -> LLM -> Piper TTS</footer>
+<script>
+// Polyfill for navigator.mediaDevices.getUserMedia (legacy browsers)
+(function(){
+  if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia){ return; }
+  navigator.mediaDevices = navigator.mediaDevices || {};
+  const getUserMedia = navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
+  if(!getUserMedia){
+    navigator.mediaDevices.getUserMedia = function(){ return Promise.reject(new Error('getUserMedia not implemented')); };
+  } else {
+    navigator.mediaDevices.getUserMedia = function(constraints){ return new Promise((res,rej)=> getUserMedia.call(navigator,constraints,res,rej)); };
+  }
+})();
+
+// --- Fallback / Permission Handling ---
+const permissionMessage = document.getElementById('permissionMessage');
+const voiceControls = document.getElementById('voiceControls');
+const textControls = document.getElementById('textControls');
+const getDevicesBtn = document.getElementById('getDevicesBtn');
+const retryMicBtn = document.getElementById('retryMicBtn');
+const textSendBtn = document.getElementById('textSendBtn');
+let micGranted = false;
+
+async function setupVoice(){
+  try {
+    await navigator.mediaDevices.getUserMedia({ audio: { channelCount:1, echoCancellation:true, noiseSuppression:true } });
+    micGranted = true;
+    voiceControls.style.display='block';
+    textControls.style.display='none';
+    permissionMessage.style.display='none';
+    const pre = document.getElementById('preMicPrompt'); if(pre) pre.style.display='none';
+  } catch(err){
+    micGranted = false;
+    const isDenied = err && (err.name==='NotAllowedError' || err.name==='PermissionDeniedError');
+    permissionMessage.textContent = isDenied ? 'Microphone access blocked. Click the lock icon in your browser address bar to allow it, then press Enable Microphone again.' : 'No working microphone found.';
+    permissionMessage.style.display='block';
+    voiceControls.style.display='none';
+    textControls.style.display='block';
+  }
+}
+getDevicesBtn&& (getDevicesBtn.onclick = setupVoice);
+retryMicBtn && (retryMicBtn.onclick = setupVoice);
+textSendBtn && (textSendBtn.onclick = async ()=>{ const val = document.getElementById('textFallback').value.trim(); if(!val) return; await sendToLLM(val); });
+
+// Attempt silent permission check (if already granted previously most browsers will auto-resolve)
+setTimeout(()=>{ setupVoice(); }, 250);
+
+const recordBtn = document.getElementById('recordBtn');
+const stopBtn = document.getElementById('stopBtn');
+const cancelBtn = document.getElementById('cancelBtn');
+const logEl = document.getElementById('log');
+const transcriptEl = document.getElementById('transcript');
+const answerEl = document.getElementById('answer');
+const autoSendToggle = document.getElementById('autoSendToggle');
+const autoTTSToggle = document.getElementById('autoTTSToggle');
+const logsToggle = document.getElementById('logsToggle');
+const backendSel = document.getElementById('backendSel');
+const personaSel = document.getElementById('personaSel');
+const topkEl = document.getElementById('topk');
+const langSel = document.getElementById('lang');
+const prog = document.getElementById('prog');
+const ttsAudio = document.getElementById('ttsAudio');
+let mediaRecorder, chunks=[], startTime; let cancelled=false; let isRecording=false;
+function log(m){ if(!logsToggle.checked) return; logEl.textContent += m + '\n'; logEl.scrollTop = logEl.scrollHeight; }
+logsToggle.addEventListener('change', ()=>{ if(!logsToggle.checked){ logEl.textContent='(hidden)'; } else { logEl.textContent=''; } });
+
+recordBtn.onclick = async () => {
+  if(isRecording) return;
+  if(!navigator.mediaDevices){ log('No mediaDevices'); return; }
+  try { const stream = await navigator.mediaDevices.getUserMedia({ audio:true });
+    chunks=[]; cancelled=false; isRecording=true;
+    mediaRecorder = new MediaRecorder(stream, { mimeType:'audio/webm' });
+    mediaRecorder.ondataavailable = e=>{ if(e.data.size>0) chunks.push(e.data); };
+    mediaRecorder.onstop = ()=>{ if(cancelled){ log('Cancelled.'); prog.style.width='0%'; return; } exportAudio(); };
+    mediaRecorder.start(250);
+    startTime = performance.now();
+    recordBtn.disabled=true; stopBtn.disabled=false; cancelBtn.disabled=false;
+    log('Recording...'); ticker();
+  } catch(e){ log('Error: '+e.message); }
+};
+stopBtn.onclick = ()=>{ if(mediaRecorder && mediaRecorder.state!=='inactive'){ mediaRecorder.stop(); } stopBtn.disabled=true; cancelBtn.disabled=true; recordBtn.disabled=false; };
+cancelBtn.onclick = ()=>{ cancelled=true; if(mediaRecorder && mediaRecorder.state!=='inactive'){ mediaRecorder.stop(); } stopBtn.disabled=true; cancelBtn.disabled=true; recordBtn.disabled=false; };
+
+function ticker(){ if(!isRecording) return; if(mediaRecorder && mediaRecorder.state==='recording'){ const dur=(performance.now()-startTime)/1000; const pct=Math.min(100,(dur/30)*100); prog.style.width=pct+'%'; requestAnimationFrame(ticker); } }
+
+async function exportAudio(){ isRecording=false; log('Finalizing...'); const blob = new Blob(chunks,{type:'audio/webm'}); log('Size '+(blob.size/1024).toFixed(1)+' KB'); prog.style.width='0%';
+  const fd=new FormData(); fd.append('file', blob, 'recording.webm'); if(langSel.value) fd.append('language', langSel.value);
+  try { const res = await fetch('/audio/transcribe',{method:'POST', body:fd}); if(!res.ok) throw new Error('Transcribe HTTP '+res.status); const data=await res.json(); const text=data.transcript||''; transcriptEl.textContent=text || '(empty)'; log('Transcribed: '+text.slice(0,80)); if(autoSendToggle.checked && text){ await sendToLLM(text); } }
+  catch(e){ transcriptEl.textContent='Error: '+e.message; log('Error: '+e.message); }
+}
+
+async function sendToLLM(query){ answerEl.textContent='...'; ttsAudio.style.display='none'; ttsAudio.src='';
+  try { const prefer = backendSel.value; const resp = await fetch('/rag/query',{method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({query, top_k: parseInt(topkEl.value)||5, prefer, persona_key: personaSel.value})}); if(!resp.ok) throw new Error('LLM HTTP '+resp.status); const data = await resp.json(); const answer = data.answer || data.error || '(no answer)'; answerEl.textContent = answer; if(autoTTSToggle.checked && answer){ await speak(answer); } }
+  catch(e){ answerEl.textContent='Error: '+e.message; log('LLM err '+e.message); }
+}
+
+const voiceSel = document.getElementById('voiceSel');
+const speedInput = document.getElementById('speedInput');
+
+// Persist voice & speed
+const VOICE_KEY='va_voice';
+const SPEED_KEY='va_speed';
+const PERSONA_KEY='va_persona';
+function loadVoicePrefs(){
+  const v = localStorage.getItem(VOICE_KEY); if(v && [...voiceSel.options].some(o=>o.value===v)) voiceSel.value=v;
+  const s = localStorage.getItem(SPEED_KEY); if(s){ const sn=parseFloat(s); if(!isNaN(sn) && sn>=0.5 && sn<=1.5) speedInput.value=sn.toFixed(2); }
+  const p = localStorage.getItem(PERSONA_KEY); if(p && [...personaSel.options].some(o=>o.value===p)) personaSel.value=p;
+}
+voiceSel.addEventListener('change', ()=>{ localStorage.setItem(VOICE_KEY, voiceSel.value); });
+speedInput.addEventListener('change', ()=>{ let val=parseFloat(speedInput.value); if(isNaN(val)){ val=0.9; } val=Math.min(1.5, Math.max(0.5, val)); speedInput.value=val.toFixed(2); localStorage.setItem(SPEED_KEY, speedInput.value); });
+personaSel.addEventListener('change', ()=>{ localStorage.setItem(PERSONA_KEY, personaSel.value); });
+loadVoicePrefs();
+
+async function speak(text){ try { const res = await fetch('/audio/tts',{method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ text, voice: voiceSel.value, speed: parseFloat(speedInput.value)||0.9 })}); if(!res.ok) throw new Error('TTS HTTP '+res.status); const data = await res.json(); const b64=data.audio_base64 || data.audio_b64; if(!b64) throw new Error('No audio'); const bin=atob(b64); const len=bin.length; const buf=new Uint8Array(len); for(let i=0;i<len;i++) buf[i]=bin.charCodeAt(i); const blob=new Blob([buf],{type:'audio/wav'}); const url=URL.createObjectURL(blob); ttsAudio.src=url; ttsAudio.style.display='block'; ttsAudio.play().catch(()=>{}); } catch(e){ log('TTS err '+e.message); }
+}
+
+// ---- Live Metrics Overlay (Voice UI) ----
+const VLM_WS_URL=(location.protocol==='https:'?'wss://':'ws://')+location.host+'/ws/metrics';
+let vlmWs=null;
+function initVoiceMetrics(){ if(document.getElementById('vmMetricsBtn')) return; const btn=document.createElement('button'); btn.id='vmMetricsBtn'; btn.textContent='Live Metrics'; btn.style.position='fixed'; btn.style.right='14px'; btn.style.bottom='14px'; btn.style.zIndex='1600'; btn.style.background='var(--accent2)'; btn.style.fontSize='.6rem'; const panel=document.createElement('div'); panel.id='vmMetricsPanel'; panel.style.position='fixed'; panel.style.right='14px'; panel.style.bottom='58px'; panel.style.width='250px'; panel.style.maxHeight='330px'; panel.style.overflow='auto'; panel.style.background='#1e242c'; panel.style.border='1px solid var(--border)'; panel.style.borderRadius='10px'; panel.style.padding='.55rem .6rem .7rem'; panel.style.display='none'; panel.style.fontSize='.6rem'; panel.innerHTML='<div style="display:flex;align-items:center;gap:.4rem;margin:0 0 .35rem;"><strong style="font-size:.68rem;">System</strong><span id="vmState" class="badge" style="background:#2d3643;">INIT</span><span id="vmClose" style="margin-left:auto;cursor:pointer;font-size:.8rem;">×</span></div><div id="vmBody">Idle</div><div id="vmModels" style="margin-top:.4rem;display:flex;flex-wrap:wrap;gap:.3rem;"></div>'; document.body.append(btn,panel); btn.onclick=()=>{ panel.style.display=panel.style.display==='none'?'block':'none'; if(panel.style.display==='block' && !vlmWs){ startVlmWs(); fetch('/health/aggregated').then(r=>r.ok?r.json():null).then(js=>{ if(js){ vmApply({ system: js.services?.system, models: []}); } }); } }; document.getElementById('vmClose').onclick=()=>{ panel.style.display='none'; }; }
+function vmColor(cpu,mem){ if(cpu>95||mem>95) return '#d64245'; if(cpu>85||mem>88) return '#d99938'; return '#4b6ef5'; }
+function vmApply(js){ const sys=js.system||{}; const models=(js.models||[]).filter(m=>m.loaded); const body=document.getElementById('vmBody'); if(body){ body.innerHTML=`CPU ${(sys.cpu_percent||0).toFixed(1)}% • MEM ${(sys.memory_percent||0).toFixed(1)}%<br/>Models ${models.length}`; } const st=document.getElementById('vmState'); if(st){ st.style.background=vmColor(sys.cpu_percent||0, sys.memory_percent||0); st.textContent='OK'; } const mWrap=document.getElementById('vmModels'); if(mWrap){ mWrap.innerHTML=''; models.slice(0,6).forEach(m=>{ const span=document.createElement('span'); span.className='badge'; span.textContent=(m.name||'').split(':')[0]; mWrap.appendChild(span); }); } }
+function startVlmWs(){ try { vlmWs=new WebSocket(VLM_WS_URL); vlmWs.onmessage=e=>{ try{ const js=JSON.parse(e.data); if(js.type==='metrics_update') vmApply(js); }catch(_){ } }; vlmWs.onclose=()=>{ vlmWs=null; }; } catch(_){ vlmWs=null; } }
+initVoiceMetrics();
+
+// Inject wake word controls below existing toggles
+(function(){
+  const panel = document.getElementById('recPanel');
+  if(!panel || document.getElementById('wakeControls')) return;
+  const div=document.createElement('div');
+  div.id='wakeControls';
+  div.className='flex';
+  div.style.fontSize='.65rem';
+  div.innerHTML=`<label class="flex" style="gap:.4rem;align-items:center;">Wake Word
+      <label class="toggle"><input type="checkbox" id="wakeToggle"><span></span></label>
+    </label>
+    <label style="display:flex;flex-direction:column;gap:.25rem;">Model
+      <input type="text" id="wakeModel" value="hey_jarvis" style="width:120px;" />
+    </label>
+    <span id="wakeState" class="badge" style="background:#2d3643;">IDLE</span>`;
+  panel.appendChild(div);
+})();
+
+let wakeEnabled=false; let wakeDetected=false; let wakePollTimer=null;
+async function pollWake(){
+  try{ const r=await fetch('/wake/status'); if(!r.ok) return; const js=await r.json(); wakeEnabled=js.enabled; wakeDetected=js.detected; const badge=document.getElementById('wakeState'); if(badge){ badge.textContent = wakeDetected? 'DETECTED':'ON'; badge.style.background = wakeDetected? '#d99938':'#4b6ef5'; if(!wakeEnabled){ badge.textContent='OFF'; badge.style.background='#2d3643'; } }
+    if(wakeDetected){ // auto clear after showing
+       setTimeout(()=>{ fetch('/wake/clear',{method:'POST'}); }, 1500);
+    }
+  }catch(_){}
+  wakePollTimer=setTimeout(pollWake, 1500);
+}
+
+function ensureWakeListeners(){
+  const t=document.getElementById('wakeToggle'); const m=document.getElementById('wakeModel'); if(!t||t._wired) return; t._wired=true;
+  t.addEventListener('change', async ()=>{ const enabled=t.checked; const model=m.value||'hey_jarvis'; try{ await fetch('/wake/enable',{method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({enabled, model})}); }catch(_){ } });
+  m.addEventListener('change', ()=>{ if(t.checked){ t.dispatchEvent(new Event('change')); } });
+}
+
+ensureWakeListeners(); pollWake();
+</script>
+</body>
+</html>

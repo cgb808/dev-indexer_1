@@ -1,0 +1,24 @@
+version: '3.9'
+services:
+  async-embed-worker:
+    image: python:3.12-slim
+    container_name: async-embed-worker
+    working_dir: /app
+    volumes:
+      - ../..:/app:ro
+    command: >-
+      bash -lc "pip install --no-cache-dir -q -r dev-indexer_1/requirements.txt && \
+      python dev-indexer_1/scripts/async_embedding_worker.py --batch-size ${BATCH_SIZE:-32} \
+        --poll-interval ${POLL_INTERVAL:-5} --hash-content --health-file /tmp/worker.health & \
+      uvicorn dev-indexer_1.scripts.worker_health_api:app --host 0.0.0.0 --port 9108"
+    environment:
+      DATABASE_URL: ${DATABASE_URL}
+      EMBED_ENDPOINT: ${EMBED_ENDPOINT:-http://app:8000/model/embed}
+      SERVICE_NAME: async-embed-worker
+      APP_ENV: ${APP_ENV:-dev}
+      WORKER_HEALTH_FILE: /tmp/worker.health
+    depends_on:
+      - timescaledb-local
+    ports:
+      - "9108:9108"
+    restart: unless-stopped

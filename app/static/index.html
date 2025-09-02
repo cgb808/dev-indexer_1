@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>ZenGlow Local UI</title>
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<style>
+:root { --bg:#0f1115; --bg-alt:#161a20; --bg-accent:#1f2530; --border:#2c3542; --text:#e6e9ef; --text-dim:#9aa4b2; --brand:#4b6ef5; --brand-accent:#8758ff; --danger:#e5484d; }
+[data-theme="light"] { --bg:#fafbfc; --bg-alt:#ffffff; --bg-accent:#f2f4f7; --border:#d8dde3; --text:#1b2430; --text-dim:#5c6675; --brand:#2f5dff; --brand-accent:#7a44ff; }
+html,body { height:100%; }
+body { font-family: system-ui,-apple-system,Segoe UI,Roboto,sans-serif; margin:0; background:var(--bg); color:var(--text); display:flex; flex-direction:column; }
+/* RAG status badge */
+.rag-badge { position:fixed; top:8px; left:8px; z-index:1000; padding:.35rem .55rem; font-size:.6rem; letter-spacing:.8px; font-weight:600; border-radius:6px; background:var(--bg-accent); color:var(--text-dim); display:flex; gap:.35rem; align-items:center; box-shadow:0 2px 4px rgba(0,0,0,.35); border:1px solid var(--border); backdrop-filter: blur(4px); }
+.rag-badge span { display:inline-block; }
+.rag-badge.rag { background:linear-gradient(120deg,var(--brand),var(--brand-accent)); color:#fff; }
+.rag-badge.no-rag { background:var(--bg-accent); color:var(--text-dim); }
+.rag-badge.error { background:var(--danger); color:#fff; }
+.rag-badge .dot { width:8px; height:8px; border-radius:50%; background:currentColor; opacity:.9; box-shadow:0 0 0 3px rgba(255,255,255,.15); }
+.rag-badge small { opacity:.75; font-weight:500; }
+header { display:flex; align-items:center; gap:.75rem; padding:.85rem 1rem; background:var(--bg-alt); border-bottom:1px solid var(--border); position:sticky; top:0; z-index:5; }
+header h1 { font-size:1.05rem; font-weight:600; letter-spacing:.5px; }
+nav a { color:var(--brand); text-decoration:none; padding:.25rem .5rem; border-radius:4px; }
+nav a:hover { background:var(--bg-accent); }
+button, input, textarea, select { font:inherit; }
+input, textarea, select { width:100%; background:var(--bg-accent); color:var(--text); border:1px solid var(--border); border-radius:8px; padding:.65rem .75rem; box-sizing:border-box; }
+textarea { resize:vertical; }
+button { background:var(--brand); color:#fff; border:none; padding:.6rem 1rem; border-radius:8px; cursor:pointer; font-weight:500; letter-spacing:.3px; display:inline-flex; align-items:center; gap:.4rem; }
+button.secondary { background:var(--bg-accent); color:var(--text-dim); }
+button.outline { background:transparent; border:1px solid var(--border); color:var(--text-dim); }
+button:disabled { opacity:.55; cursor:not-allowed; }
+main { width:100%; max-width:1080px; margin:0 auto; padding:1rem clamp(.75rem,2vw,1.5rem); flex:1; display:flex; flex-direction:column; gap:1rem; }
+.layout { display:grid; grid-template-columns: minmax(0,1fr) 340px; gap:1.25rem; }
+@media (max-width: 980px){ .layout { grid-template-columns: 1fr; } }
+#history { background:var(--bg-alt); border:1px solid var(--border); border-radius:10px; padding:1rem; height:330px; overflow:auto; display:flex; flex-direction:column; gap:.75rem; font-size:.9rem; }
+.msg { display:flex; gap:.6rem; }
+.msg .role { text-transform:uppercase; font-size:.6rem; letter-spacing:.8px; padding:.35rem .5rem; border-radius:4px; background:var(--bg-accent); color:var(--text-dim); flex-shrink:0; line-height:1.15; position:relative; top:.15rem; }
+.msg.user .role { background:var(--brand); color:#fff; }
+.msg.assistant .role { background:var(--brand-accent); color:#fff; }
+.msg.system .role { background:#444; color:#eee; }
+.msg .content { white-space:pre-wrap; line-height:1.35; }
+#answer { white-space:pre-wrap; background:var(--bg-alt); padding:1rem; border:1px solid var(--border); border-radius:10px; min-height:140px; font-size:.95rem; line-height:1.4; }
+#chunks { display:grid; gap:.5rem; }
+.chunk { background:var(--bg-alt); padding:.6rem .7rem; border:1px solid var(--border); border-radius:8px; font-size:.72rem; line-height:1.25; color:var(--text-dim); }
+footer { margin-top:2rem; opacity:.55; font-size:.7rem; padding:1.5rem 1rem 2.5rem; text-align:center; }
+.progress { height:3px; background:var(--bg-accent); width:100%; border-radius:2px; overflow:hidden; }
+.progress div { height:100%; width:0; background:linear-gradient(90deg,var(--brand),var(--brand-accent)); transition:width .45s; }
+.panel { background:var(--bg-alt); border:1px solid var(--border); border-radius:12px; padding:1rem 1rem 1.2rem; display:flex; flex-direction:column; gap:.9rem; }
+.panel h3 { margin:.1rem 0 .25rem; font-size:.85rem; font-weight:600; letter-spacing:.8px; color:var(--text-dim); }
+.inline { display:flex; gap:.6rem; align-items:center; }
+.inline input[type='number'] { width:90px; }
+.row { display:flex; gap:.6rem; align-items:center; }
+.spacer { flex:1; }
+.pill { font-size:.6rem; background:var(--bg-accent); padding:.3rem .5rem; border-radius:20px; letter-spacing:.5px; }
+.digital { font-family: 'SFMono-Regular', ui-monospace, Menlo, monospace; letter-spacing:1px; }
+.toggle { position:relative; width:34px; height:18px; }
+.toggle input { opacity:0; width:0; height:0; }
+.slider { position:absolute; cursor:pointer; top:0; left:0; right:0; bottom:0; background:var(--bg-accent); transition:.25s; border:1px solid var(--border); border-radius:20px; }
+.slider:before { position:absolute; content:""; height:14px; width:14px; left:2px; top:1px; background:var(--text-dim); border-radius:50%; transition:.25s; }
+.toggle input:checked + .slider { background:var(--brand); }
+.toggle input:checked + .slider:before { transform:translateX(16px); background:#fff; }
+.cfg-grid { display:grid; gap:.75rem; grid-template-columns:repeat(auto-fill,minmax(140px,1fr)); }
+/* Debug logs */
+.log-wrap { background:var(--bg-alt); border:1px solid var(--border); border-radius:10px; padding:.5rem .6rem; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size:.65rem; line-height:1.25; max-height:210px; overflow:auto; white-space:pre-wrap; }
+.log-wrap .lvl-ERROR { color: var(--danger); }
+.log-wrap .lvl-WARNING { color:#f5d06b; }
+.log-wrap .lvl-INFO { color:#8fb4ff; }
+.log-wrap .lvl-DEBUG { color:#6d889f; }
+@media (max-width:600px){ header { flex-wrap:wrap; } #history { height:260px; } .layout { gap:1rem; } }
+::-webkit-scrollbar { width:10px; height:10px; }
+::-webkit-scrollbar-track { background:var(--bg); }
+::-webkit-scrollbar-thumb { background:var(--bg-accent); border:2px solid var(--bg); border-radius:20px; }
+::-webkit-scrollbar-thumb:hover { background:var(--brand); }
+</style>
+</head>
+<body>
+<div id="ragBadge" class="rag-badge" title="Retrieval status">
+  <span class="dot"></span>
+  <span id="ragBadgeText">INIT</span>
+  <small id="ragBadgeDetail"></small>
+</div>
+<header>
+  <h1 style="margin:0;font-size:1.25rem;">ZenGlow Assistant</h1>
+  <nav style="margin-left:auto; display:flex; gap:1rem; font-size:.9rem;">
+    <a href="/static/index.html" style="color:#8fb4ff; text-decoration:none;">Chat</a>
+    <a href="/static/voice.html" style="color:#8fb4ff; text-decoration:none;">Voice</a>
+  <a href="/static/dashboard/index.html" style="color:#8fb4ff; text-decoration:none;">Metrics</a>
+  </nav>
+</header>
+<main>
+  <div class="layout">
+    <div class="left">
+      <div class="panel" style="gap:.75rem;">
+        <div class="row" style="gap:.5rem; align-items:flex-start;">
+          <div style="flex:1;">
+            <textarea id="query" rows="3" placeholder="Ask something... (Ctrl/Cmd+Enter to send)" autofocus></textarea>
+          </div>
+          <div style="display:flex; flex-direction:column; gap:.4rem; width:110px;">
+            <button id="go" style="height:100%; min-height:60px;">Send</button>
+            <button id="clear" class="outline" style="font-size:.7rem;">Clear</button>
+          </div>
+        </div>
+        <div class="row" style="font-size:.7rem; color:var(--text-dim); flex-wrap:wrap; gap:.4rem;">
+          <span id="status">Idle</span>
+          <span class="pill" id="latency" style="display:none;"></span>
+          <span class="pill" id="tps" style="display:none;"></span>
+          <span class="pill" id="backendTag" style="display:none;"></span>
+          <span class="pill digital" id="tokenTotals" style="display:none;"></span>
+          <span class="pill" id="sessionTag" style="display:none; max-width:120px; overflow:hidden; text-overflow:ellipsis;"></span>
+          <span class="spacer"></span>
+          <span class="pill" id="count"></span>
+                  <span class="pill" id="opsReqs" style="display:none;"></span>
+                  <span class="pill" id="opsErrors" style="display:none;"></span>
+        </div>
+        <div class="progress"><div id="progressBar"></div></div>
+      </div>
+      <div id="history"></div>
+      <h3 style="margin:.5rem 0 .3rem; font-size:.75rem; letter-spacing:1px; font-weight:600; color:var(--text-dim);">Answer</h3>
+      <div id="answer"></div>
+      <h3 style="margin:1.25rem 0 .3rem; font-size:.7rem; letter-spacing:1px; font-weight:600; color:var(--text-dim);">Context Chunks</h3>
+      <div id="chunks"></div>
+      <h3 id="debugLogsHeader" style="display:none; margin:1.25rem 0 .3rem; font-size:.7rem; letter-spacing:1px; font-weight:600; color:var(--text-dim);">Debug Logs</h3>
+      <div id="debugLogWrap" class="log-wrap" style="display:none;"><div id="debugLog"></div></div>
+    </div>
+    <div class="right panel" style="align-self:start; position:relative;">
+      <h3 style="margin-top:0;">Config</h3>
+      <div class="cfg-grid">
+        <label style="display:flex; flex-direction:column; gap:.3rem; font-size:.7rem;">Top K
+          <input id="topk" type="number" min="1" max="15" value="5" />
+        </label>
+        <label style="display:flex; flex-direction:column; gap:.3rem; font-size:.7rem;">Backend
+          <select id="backendSel">
+            <option value="auto">Auto</option>
+            <option value="edge">Edge</option>
+            <option value="llama">llama.cpp</option>
+            <option value="ollama">Ollama</option>
+          </select>
+        </label>
+        <label style="display:flex; flex-direction:column; gap:.3rem; font-size:.7rem;">Persona
+          <select id="personaSel">
+            <option value="british_butler">Butler</option>
+            <option value="neutral">Neutral</option>
+            <option value="fun_supportive">Fun</option>
+            <option value="terse_expert">Terse</option>
+          </select>
+        </label>
+        <label style="display:flex; flex-direction:column; gap:.3rem; font-size:.7rem;">History Limit
+          <input id="histLimit" type="number" min="50" max="1000" value="250" />
+        </label>
+        <label style="display:flex; flex-direction:column; gap:.3rem; font-size:.7rem;">Theme
+          <select id="themeSel"><option value="dark">Dark</option><option value="light">Light</option></select>
+        </label>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:.65rem; margin-top:.75rem; font-size:.75rem;">
+        <label class="inline">Persist History
+          <label class="toggle" style="margin-left:auto;"><input type="checkbox" id="persistToggle" checked /><span class="slider"></span></label>
+        </label>
+        <label class="inline">Auto Scroll
+          <label class="toggle" style="margin-left:auto;"><input type="checkbox" id="autoScrollToggle" checked /><span class="slider"></span></label>
+        </label>
+        <label class="inline">Show Chunks
+          <label class="toggle" style="margin-left:auto;"><input type="checkbox" id="chunksToggle" checked /><span class="slider"></span></label>
+        </label>
+        <label class="inline">Token Counter
+          <label class="toggle" style="margin-left:auto;"><input type="checkbox" id="tokenToggle" checked /><span class="slider"></span></label>
+        </label>
+        <label class="inline">Debug Logs
+          <label class="toggle" style="margin-left:auto;"><input type="checkbox" id="debugLogToggle" /><span class="slider"></span></label>
+        </label>
+      </div>
+      <div style="margin-top:1rem; display:flex; gap:.5rem; flex-wrap:wrap;">
+        <button id="export" class="secondary" style="font-size:.65rem;">Export JSON</button>
+        <button id="purge" class="secondary" style="font-size:.65rem; color:var(--danger);">Purge</button>
+        <button id="newSessionBtn" class="secondary" style="font-size:.65rem;">New Session</button>
+      </div>
+    </div>
+  </div>
+</main>
+<footer>Local UI — /rag/query endpoint. Data stays local. History stored only in this browser.</footer>
+<script>
+const qEl = document.getElementById('query');
+const btn = document.getElementById('go');
+const clearBtn = document.getElementById('clear');
+const ansEl = document.getElementById('answer');
+const chunksEl = document.getElementById('chunks');
+const topkEl = document.getElementById('topk');
+const statusEl = document.getElementById('status');
+const progressBar = document.getElementById('progressBar');
+const historyEl = document.getElementById('history');
+const histLimitEl = document.getElementById('histLimit');
+const themeSel = document.getElementById('themeSel');
+const persistToggle = document.getElementById('persistToggle');
+const autoScrollToggle = document.getElementById('autoScrollToggle');
+const chunksToggle = document.getElementById('chunksToggle');
+const tokenToggle = document.getElementById('tokenToggle');
+const exportBtn = document.getElementById('export');
+const purgeBtn = document.getElementById('purge');
+const newSessionBtn = document.getElementById('newSessionBtn');
+const countEl = document.getElementById('count');
+const backendSel = document.getElementById('backendSel');
+const personaSel = document.getElementById('personaSel');
+const latencyEl = document.getElementById('latency');
+const tpsEl = document.getElementById('tps');
+const backendTag = document.getElementById('backendTag');
+const sessionTag = document.getElementById('sessionTag');
+const tokenTotals = document.getElementById('tokenTotals');
+const ragBadge = document.getElementById('ragBadge');
+const ragBadgeText = document.getElementById('ragBadgeText');
+const ragBadgeDetail = document.getElementById('ragBadgeDetail');
+const opsReqs = document.getElementById('opsReqs');
+const opsErrors = document.getElementById('opsErrors');
+const debugLogToggle = document.getElementById('debugLogToggle');
+const debugLogWrap = document.getElementById('debugLogWrap');
+const debugLog = document.getElementById('debugLog');
+const debugLogsHeader = document.getElementById('debugLogsHeader');
+let logCursor = 0; let logTimer = null;
+let sessionId = crypto.randomUUID();
+let history = [];
+let totalPromptTokens = 0; let totalAnswerTokens = 0;
+const STORAGE_KEY = 'zg_chat_history_v1';
+const TOKEN_PREF_KEY = 'zg_token_counter';
+const PERSONA_KEY = 'zg_persona_key';
+
+function showSession(){ sessionTag.style.display='inline-block'; sessionTag.textContent = sessionId.split('-')[0]; }
+function newSession(){ sessionId = crypto.randomUUID(); push('system','Session reset: '+sessionId); showSession(); totalPromptTokens=0; totalAnswerTokens=0; updateTokenTotals(); }
+window.newSession = newSession;
+
+function loadHistory(){ try{ const raw = localStorage.getItem(STORAGE_KEY); if(raw){ history = JSON.parse(raw)||[]; } }catch(_){ history=[]; } }
+function saveHistory(){ if(!persistToggle.checked) return; try { localStorage.setItem(STORAGE_KEY, JSON.stringify(history)); } catch(_){ } }
+function renderHistory(){ historyEl.innerHTML=''; history.slice(-parseInt(histLimitEl.value||'250')).forEach(msg=>{ const wrap=document.createElement('div'); wrap.className='msg '+msg.role; const role=document.createElement('div'); role.className='role'; role.textContent=msg.role; const content=document.createElement('div'); content.className='content'; content.textContent=msg.content; wrap.append(role, content); historyEl.appendChild(wrap); }); countEl.textContent = history.length + ' msgs'; if(autoScrollToggle.checked) historyEl.scrollTop = historyEl.scrollHeight; }
+function push(role, content){ history.push({role, content}); const lim = parseInt(histLimitEl.value||'250'); if(history.length>lim) history = history.slice(-lim); saveHistory(); renderHistory(); }
+
+function setTheme(t){ document.documentElement.dataset.theme = t==='light'?'light':'dark'; }
+themeSel.addEventListener('change', ()=>{ setTheme(themeSel.value); localStorage.setItem('zg_theme', themeSel.value); });
+
+function restorePrefs(){ const t = localStorage.getItem('zg_theme'); if(t){ themeSel.value=t; setTheme(t); } const limit = localStorage.getItem('zg_hist_limit'); if(limit){ histLimitEl.value=limit; } const persist = localStorage.getItem('zg_persist'); if(persist==='0') { persistToggle.checked=false; } const tokenPref = localStorage.getItem(TOKEN_PREF_KEY); if(tokenPref==='0'){ tokenToggle.checked=false; } const pk = localStorage.getItem(PERSONA_KEY); if(pk && [...personaSel.options].some(o=>o.value===pk)){ personaSel.value=pk; } }
+personaSel.addEventListener('change', ()=>{ localStorage.setItem(PERSONA_KEY, personaSel.value); });
+
+histLimitEl.addEventListener('change', ()=>{ localStorage.setItem('zg_hist_limit', histLimitEl.value); renderHistory(); });
+persistToggle.addEventListener('change', ()=>{ localStorage.setItem('zg_persist', persistToggle.checked?'1':'0'); if(persistToggle.checked) saveHistory(); });
+
+tokenToggle.addEventListener('change', ()=>{ localStorage.setItem(TOKEN_PREF_KEY, tokenToggle.checked?'1':'0'); if(!tokenToggle.checked){ latencyEl.style.display='none'; tpsEl.style.display='none'; tokenTotals.style.display='none'; } else { updateTokenTotals(); } });
+
+clearBtn.addEventListener('click', ()=>{ qEl.value=''; qEl.focus(); });
+exportBtn.addEventListener('click', ()=>{ const blob = new Blob([JSON.stringify(history,null,2)], {type:'application/json'}); const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='chat_history.json'; a.click(); URL.revokeObjectURL(a.href); });
+purgeBtn.addEventListener('click', ()=>{ if(!confirm('Delete stored history?')) return; history=[]; saveHistory(); renderHistory(); });
+newSessionBtn.addEventListener('click', newSession);
+
+function updateTokenTotals(){ if(!tokenToggle.checked){ tokenTotals.style.display='none'; return; } tokenTotals.style.display='inline-block'; tokenTotals.textContent = `P:${totalPromptTokens} A:${totalAnswerTokens}`; }
+
+function updateRagBadge(meta){
+  const used = meta && meta.rag_used !== undefined ? meta.rag_used : undefined;
+  const err = meta && meta.retrieval_error;
+  ragBadge.classList.remove('rag','no-rag','error');
+  if(err){ ragBadge.classList.add('error'); ragBadgeText.textContent='FALLBACK'; ragBadgeDetail.textContent='retrieval error'; return; }
+  if(used === true){ ragBadge.classList.add('rag'); ragBadgeText.textContent='RAG'; ragBadgeDetail.textContent='context applied'; }
+  else if(used === false){ ragBadge.classList.add('no-rag'); ragBadgeText.textContent='NO-RAG'; ragBadgeDetail.textContent='model only'; }
+  else { ragBadge.classList.add('no-rag'); ragBadgeText.textContent='READY'; ragBadgeDetail.textContent=''; }
+}
+
+async function fetchLogs(){
+  try {
+    const resp = await fetch(`/logs/recent?since=${logCursor}`);
+    if(!resp.ok) return;
+    const data = await resp.json();
+    if(Array.isArray(data.lines) && data.lines.length){
+      data.lines.forEach(l=>{
+        const line = document.createElement('div');
+        line.className = 'log-line lvl-'+(l.level||'');
+        const ts = new Date(l.ts*1000).toISOString().split('T')[1].replace('Z','');
+        line.textContent = `[${ts}] ${l.level} ${l.msg}`;
+        debugLog.appendChild(line);
+      });
+      logCursor = data.next || logCursor;
+      const maxLines = 1500;
+      while(debugLog.children.length>maxLines){ debugLog.removeChild(debugLog.firstChild); }
+      debugLogWrap.scrollTop = debugLogWrap.scrollHeight;
+    }
+  } catch(_){ }
+}
+function enableLogs(){ if(logTimer) return; debugLogWrap.style.display='block'; debugLogsHeader.style.display='block'; fetchLogs(); logTimer = setInterval(fetchLogs, 1500); }
+function disableLogs(){ if(logTimer){ clearInterval(logTimer); logTimer=null; } debugLogWrap.style.display='none'; debugLogsHeader.style.display='none'; }
+debugLogToggle.addEventListener('change', ()=>{ if(debugLogToggle.checked){ enableLogs(); } else { disableLogs(); }});
+
+async function run(){ const query = qEl.value.trim(); if(!query) return; const promptTokens = query.split(/\s+/).filter(Boolean).length; totalPromptTokens += promptTokens; updateTokenTotals(); push('user', query); qEl.value=''; qEl.focus(); btn.disabled = true; ansEl.textContent=''; if(chunksToggle.checked) chunksEl.innerHTML=''; statusEl.textContent='Running'; progressBar.style.width='15%'; if(tokenToggle.checked){ latencyEl.style.display='none'; tpsEl.style.display='none'; } backendTag.style.display='none';
+  try { const prefer = backendSel.value; const resp = await fetch('/rag/query',{method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({query, top_k: parseInt(topkEl.value)||5, prefer, session_id: sessionId, persona_key: personaSel.value})}); progressBar.style.width='55%'; if(!resp.ok){ throw new Error('HTTP '+resp.status); } const data = await resp.json(); progressBar.style.width='90%'; let answerText = data.error ? ('Error: '+data.error+' '+(data.detail||'')) : (data.answer || '(no answer)'); ansEl.textContent = answerText; push('assistant', answerText); const meta = data.answer_meta || {}; updateRagBadge(meta); if(meta.backend){ backendTag.style.display='inline-block'; backendTag.textContent = meta.backend; } if(meta.token_estimate){ totalAnswerTokens += meta.token_estimate; } if(tokenToggle.checked && meta.latency_ms){ latencyEl.style.display='inline-block'; latencyEl.textContent = Math.round(meta.latency_ms)+' ms'; if(meta.token_estimate){ const sec=meta.latency_ms/1000; const tps = sec>0?(meta.token_estimate/sec).toFixed(1):''; if(tps){ tpsEl.style.display='inline-block'; tpsEl.textContent = tps+' tok/s'; } } } updateTokenTotals(); if(chunksToggle.checked){ (data.chunks||[]).forEach(c=>{ const div=document.createElement('div'); div.className='chunk'; div.textContent=(c.chunk||'').slice(0,1000); chunksEl.appendChild(div); }); } statusEl.textContent='Done'; progressBar.style.width='100%'; }
+  catch(e){ statusEl.textContent='Failed'; const msg='Error: '+e.message; ansEl.textContent=msg; push('assistant', msg); updateRagBadge({retrieval_error: msg}); }
+  finally { setTimeout(()=>{ progressBar.style.width='0%'; }, 800); btn.disabled=false; }
+}
+btn.addEventListener('click', run);
+qEl.addEventListener('keydown', e=>{ if(e.key==='Enter' && (e.metaKey||e.ctrlKey)) run(); });
+document.addEventListener('keydown', e=>{ if(e.key==='/' && e.target===document.body){ e.preventDefault(); qEl.focus(); } });
+
+// Init
+restorePrefs(); loadHistory(); renderHistory(); showSession(); updateTokenTotals(); updateRagBadge({});
+const savedTheme = localStorage.getItem('zg_theme'); if(savedTheme) setTheme(savedTheme);
+if(debugLogToggle.checked) enableLogs();
+
+// Lightweight ops metrics polling
+async function pollOps(){
+  try { const r = await fetch('/metrics/basic'); if(!r.ok) return; const js = await r.json(); const ctrs = js.counters||{}; if(ctrs.requests_total!==undefined){ opsReqs.style.display='inline-block'; opsReqs.textContent = 'reqs '+ctrs.requests_total; } if(ctrs.errors_total!==undefined){ opsErrors.style.display='inline-block'; opsErrors.textContent='err '+ctrs.errors_total; opsErrors.style.background = ctrs.errors_total? 'var(--danger)':'var(--bg-accent)'; opsErrors.style.color = ctrs.errors_total? '#fff':'var(--text-dim)'; } } catch(_){ }
+  finally { setTimeout(pollOps, 5000); }
+}
+pollOps();
+// ---- Live Metrics Overlay ----
+const LM_WS_URL = (location.protocol==='https:'?'wss://':'ws://')+location.host+'/ws/metrics';
+let lmWs=null, lmReconnect=null;
+function initLiveMetrics(){ if(document.getElementById('lmToggleBtn')) return; const btn=document.createElement('button'); btn.id='lmToggleBtn'; btn.textContent='Live Metrics'; btn.style.position='fixed'; btn.style.right='14px'; btn.style.bottom='14px'; btn.style.zIndex='1400'; btn.style.background='var(--brand-accent)'; btn.style.fontSize='.65rem'; const panel=document.createElement('div'); panel.id='lmPanel'; panel.style.position='fixed'; panel.style.right='14px'; panel.style.bottom='60px'; panel.style.width='280px'; panel.style.maxHeight='360px'; panel.style.overflow='auto'; panel.style.background='var(--bg-alt)'; panel.style.border='1px solid var(--border)'; panel.style.borderRadius='10px'; panel.style.padding='.7rem .75rem .8rem'; panel.style.display='none'; panel.style.fontSize='.65rem'; panel.innerHTML='<div style="display:flex;align-items:center;gap:.5rem;margin:.05rem 0 .45rem;"><strong style="font-size:.72rem;">System</strong><span id="lmState" class="pill" style="background:var(--bg-accent);">INIT</span><span id="lmClose" style="margin-left:auto;cursor:pointer;font-size:.8rem;">×</span></div><div id="lmBody">Idle</div><div id="lmModels" style="margin-top:.5rem;display:flex;flex-wrap:wrap;gap:.35rem;"></div>'; document.body.append(btn,panel); btn.onclick=()=>{ panel.style.display=panel.style.display==='none'?'block':'none'; if(panel.style.display==='block' && !lmWs){ startLmWs(); fetchAggregatedHealth(); } }; panel.querySelector('#lmClose').onclick=()=>{ panel.style.display='none'; } }
+function lmClass(cpu,mem){ if(cpu>95||mem>95) return 'crit'; if(cpu>85||mem>88) return 'hot'; return 'ok'; }
+function applyLm(js){ const sys=js.system||{}; const qs=js.query_stats||{}; const models=(js.models||[]).filter(m=>m.loaded); const body=document.getElementById('lmBody'); if(body){ body.innerHTML=`CPU ${(sys.cpu_percent||0).toFixed(1)}% • MEM ${(sys.memory_percent||0).toFixed(1)}%<br/>Reqs ${qs.total||0} P95 ${(qs.p95_ms||0).toFixed? (qs.p95_ms||0).toFixed(0):qs.p95_ms||'0'} ms`; } const state=document.getElementById('lmState'); if(state){ const cls=lmClass(sys.cpu_percent||0, sys.memory_percent||0); state.textContent=cls.toUpperCase(); state.style.background = cls==='ok'? 'var(--brand-accent)': (cls==='hot'? '#d99938':'var(--danger)'); state.style.color='#fff'; }
+  const wrap=document.getElementById('lmModels'); if(wrap){ wrap.innerHTML=''; models.slice(0,8).forEach(m=>{ const span=document.createElement('span'); span.className='pill'; span.textContent=(m.name||'').split(':')[0]; wrap.appendChild(span); }); }
+}
+function startLmWs(){ try { lmWs=new WebSocket(LM_WS_URL); lmWs.onopen=()=>{ const b=document.getElementById('lmBody'); if(b) b.textContent='Streaming...'; }; lmWs.onmessage=e=>{ try { const js=JSON.parse(e.data); if(js.type==='metrics_update') applyLm(js); } catch(_){} }; lmWs.onclose=()=>{ lmWs=null; if(document.getElementById('lmPanel')?.style.display==='block'){ lmReconnect=setTimeout(startLmWs, 4000); } }; lmWs.onerror=()=>{ try{ lmWs.close(); }catch(_){ } }; } catch(_){ lmWs=null; }
+}
+function fetchAggregatedHealth(){ fetch('/health/aggregated').then(r=>r.ok?r.json():null).then(js=>{ if(js){ applyLm({ system: js.services?.system, query_stats:{}, models: []}); } }).catch(()=>{}); }
+initLiveMetrics();
+</script>
+</body>
+</html>

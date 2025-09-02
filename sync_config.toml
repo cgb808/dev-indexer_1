@@ -1,0 +1,56 @@
+# ZenGlow Sync Configuration
+# This file contains settings for file synchronization between local and remote hosts
+
+[remote]
+host = beast3
+user = cgbowen
+path = /home/cgbowen/ZenGlow
+port = 22
+
+[local]
+path = /mnt/DevBuilds/ZenGlow/ZenGlow/dev-indexer_1
+
+[ssh]
+key_file = ~/.ssh/id_ed25519
+config_file = ~/.ssh/config
+connection_timeout = 10
+
+[rsync]
+# Exclude patterns for rsync transfers
+exclude = [
+    "node_modules/",
+    "__pycache__/",
+    "*.pyc",
+    ".pytest_cache/",
+    ".ruff_cache/",
+    ".mypy_cache/",
+    ".vscode/",
+    ".venv/",
+    "*.log",
+    ".DS_Store",
+    "Thumbs.db",
+    "*.tmp",
+    "*.swp",
+    "*.swo",
+    ".expo/",
+    ".expo-shared/",
+    ".git/",
+    "tmp/",
+    ".sync_backup_*"
+]
+
+[mount]
+# SSHFS mount options
+mount_point = ~/remote_zenglow
+options = [
+    "reconnect",
+    "ServerAliveInterval=15",
+    "ServerAliveCountMax=3",
+    "follow_symlinks",
+    "allow_other"
+]
+
+[logging]
+# Log file for sync operations
+log_file = ~/.zenglow_sync.log
+verbose = true

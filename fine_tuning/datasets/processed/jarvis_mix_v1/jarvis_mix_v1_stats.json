@@ -1,0 +1,70 @@
+{
+  "buckets": {
+    "socratic_method_core": {
+      "available": 855,
+      "selected": 600,
+      "target": 600
+    },
+    "drill_down_questioning": {
+      "available": 648,
+      "selected": 400,
+      "target": 400
+    },
+    "tutoring_methodology_core": {
+      "available": 500,
+      "selected": 450,
+      "target": 450
+    },
+    "hybrid_methodology_math": {
+      "available": 1000,
+      "selected": 350,
+      "target": 350
+    },
+    "session_management": {
+      "available": 6,
+      "selected": 6,
+      "target": 250
+    },
+    "reasoning_step_by_step_math": {
+      "available": 100,
+      "selected": 100,
+      "target": 500
+    },
+    "reasoning_openorca_explanatory": {
+      "available": 0,
+      "selected": 0,
+      "target": 350
+    },
+    "reasoning_basic_math_word": {
+      "available": 0,
+      "selected": 0,
+      "target": 250
+    },
+    "interruption_recovery_general": {
+      "available": 400,
+      "selected": 180,
+      "target": 180
+    },
+    "interruption_recovery_specialized": {
+      "available": 100,
+      "selected": 100,
+      "target": 120
+    },
+    "interruption_management_mixed": {
+      "available": 136,
+      "selected": 136,
+      "target": 200
+    },
+    "safety_moderation_interventions": {
+      "available": 5,
+      "selected": 5,
+      "target": 120
+    },
+    "refusal_boundary_cases": {
+      "available": 5,
+      "selected": 5,
+      "target": 80
+    }
+  },
+  "total": 2332
+}

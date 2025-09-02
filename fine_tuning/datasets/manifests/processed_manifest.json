@@ -1,0 +1,332 @@
+{
+  "root": "fine_tuning/datasets/processed",
+  "total_files": 22,
+  "total_examples": 10199,
+  "total_est_tokens": 2860640,
+  "generated_by": "build_dataset_manifest.py",
+  "entries": [
+    {
+      "relative_path": "fine_tuning/datasets/processed/pure_methodology_tutoring.jsonl",
+      "size_bytes": 234075,
+      "line_count": 500,
+      "sha256": "bdb2ac24639823d562452586a4725070d9e572ccec84a3b0c9b4d755d442b5c2",
+      "first_timestamp": null,
+      "sample_fields": [
+        "example_type",
+        "input",
+        "instruction",
+        "output",
+        "subject_focus"
+      ],
+      "avg_chars_per_line": 467.15,
+      "est_tokens": 58393
+    },
+    {
+      "relative_path": "fine_tuning/datasets/processed/next_epoch/final_balanced_dataset.jsonl",
+      "size_bytes": 3121253,
+      "line_count": 1842,
+      "sha256": "5f5f09bd31e050b02d99f30d3c2122a6d8c21ab7f2541121a17e8a6d95558183",
+      "first_timestamp": null,
+      "sample_fields": [
+        "input",
+        "instruction",
+        "meta",
+        "output"
+      ],
+      "avg_chars_per_line": 1692.05,
+      "est_tokens": 779191
+    },
+    {
+      "relative_path": "fine_tuning/datasets/processed/socratic_method/socratic_method_high_confidence.jsonl",
+      "size_bytes": 1221389,
+      "line_count": 846,
+      "sha256": "bf85509dc7f62863b699dbd14ea8e65d4ee305b325880fcc54973c92d31d62ea",
+      "first_timestamp": null,
+      "sample_fields": [
+        "example_type",
+        "input",
+        "instruction",
+        "output",
+        "socratic_metadata",
+        "subject_focus"
+      ],
+      "avg_chars_per_line": 1442.72,
+      "est_tokens": 305135
+    },
+    {
+      "relative_path": "fine_tuning/datasets/processed/socratic_method/socratic_method_combined.jsonl",
+      "size_bytes": 1240290,
+      "line_count": 855,
+      "sha256": "5bdc49df25c2fd2d180ba6408f163f4d935f3bbf7c8d3f67a57282c94be9345b",
+      "first_timestamp": null,
+      "sample_fields": [
+        "example_type",
+        "input",
+        "instruction",
+        "output",
+        "socratic_metadata",
+        "subject_focus"
+      ],
+      "avg_chars_per_line": 1449.63,
+      "est_tokens": 309858
+    },
+    {
+      "relative_path": "fine_tuning/datasets/processed/drill_down_questioning/combined_drill_down_questioning.jsonl",
+      "size_bytes": 737185,
+      "line_count": 648,
+      "sha256": "12b7349074e7c5d043af185d5840710c81a0f235237281e50e6c4f568a84089c",
+      "first_timestamp": null,
+      "sample_fields": [
+        "instruction",
+        "output"
+      ],
+      "avg_chars_per_line": 1136.63,
+      "est_tokens": 184134
+    },
+    {
+      "relative_path": "fine_tuning/datasets/processed/drill_down_questioning/raw_drill_down_questioning.jsonl",
+      "size_bytes": 111980,
+      "line_count": 294,
+      "sha256": "3316f393d214084349fc26c3ea4e145cf7cb0ee2227174e8ad9037a9b6fdfb64",
+      "first_timestamp": null,
+      "sample_fields": [
+        "instruction",
+        "output"
+      ],
+      "avg_chars_per_line": 379.88,
+      "est_tokens": 27921
+    },
+    {
+      "relative_path": "fine_tuning/datasets/processed/drill_down_questioning/real_drill_down_questioning.jsonl",
+      "size_bytes": 80134,
+      "line_count": 284,
+      "sha256": "c263800f6eb88140ae332a8ac2408a0fa915e81f47f979d77c26e0e1703b640c",
+      "first_timestamp": null,
+      "sample_fields": [
+        "instruction",
+        "output"
+      ],
+      "avg_chars_per_line": 281.16,
+      "est_tokens": 19962
+    },
+    {
+      "relative_path": "fine_tuning/datasets/processed/drill_down_questioning/varied_drill_down_questioning.jsonl",
+      "size_bytes": 0,
+      "line_count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "first_timestamp": null,
+      "sample_fields": [],
+      "avg_chars_per_line": 0.0,
+      "est_tokens": 0
+    },
+    {
+      "relative_path": "fine_tuning/datasets/processed/hybrid/hybrid_methodology_math_dataset.jsonl",
+      "size_bytes": 823946,
+      "line_count": 1000,
+      "sha256": "59e3922be626925d9c1f03d3d6614bbf695a72eb8e23a7fd8234acca01eb9a39",
+      "first_timestamp": null,
+      "sample_fields": [
+        "example_type",
+        "input",
+        "instruction",
+        "methodology_focus",
+        "output",
+        "subject_focus"
+      ],
+      "avg_chars_per_line": 822.95,
+      "est_tokens": 205736
+    },
+    {
+      "relative_path": "fine_tuning/datasets/processed/interruption_handling/interruption_recovery_specialized_100.jsonl",
+      "size_bytes": 74398,
+      "line_count": 100,
+      "sha256": "82447e24e08731251c3ddaf6cb26aabbb128eee8de98d16412e403b7ff2e0352",
+      "first_timestamp": null,
+      "sample_fields": [
+        "affect_focus",
+        "controller_label",
+        "domain",
+        "input",
+        "instruction",
+        "interruption_type",
+        "meta",
+        "output",
+        "recovery_strategy",
+        "tier"
+      ],
+      "avg_chars_per_line": 741.38,
+      "est_tokens": 18534
+    },
+    {
+      "relative_path": "fine_tuning/datasets/processed/interruption_handling/interruption_recovery_base_400.jsonl",
+      "size_bytes": 297867,
+      "line_count": 400,
+      "sha256": "265eb696eeb97cbebec09f37d363a1f24f3fb3a37e328c425679c18189857a0e",
+      "first_timestamp": null,
+      "sample_fields": [
+        "affect_focus",
+        "controller_label",
+        "domain",
+        "input",
+        "instruction",
+        "interruption_type",
+        "meta",
+        "output",
+        "recovery_strategy",
+        "tier"
+      ],
+      "avg_chars_per_line": 741.88,
+      "est_tokens": 74188
+    },
+    {
+      "relative_path": "fine_tuning/datasets/processed/interruption_handling/combined_interruption_session_training.jsonl",
+      "size_bytes": 56418,
+      "line_count": 71,
+      "sha256": "6034b9bcc69f47a4d378e580d98dc7b53c7f82ea858261f17ee19dea44d7ae50",
+      "first_timestamp": null,
+      "sample_fields": [
+        "affect_focus",
+        "context_domain",
+        "input",
+        "instruction",
+        "interruption_handling",
+        "output",
+        "pedagogy_strategy"
+      ],
+      "avg_chars_per_line": 793.62,
+      "est_tokens": 14086
+    },
+    {
+      "relative_path": "fine_tuning/datasets/processed/interruption_handling/interruption_handling_training.jsonl",
+      "size_bytes": 53363,
+      "line_count": 65,
+      "sha256": "c34ca3bcbdafc51479b5c466de3f901a1152dbde7103fcb86742a44a1777629a",
+      "first_timestamp": null,
+      "sample_fields": [
+        "affect_focus",
+        "context_domain",
+        "input",
+        "instruction",
+        "interruption_handling",
+        "output",
+        "pedagogy_strategy"
+      ],
+      "avg_chars_per_line": 819.97,
+      "est_tokens": 13324
+    },
+    {
+      "relative_path": "fine_tuning/datasets/processed/interruption_handling/session_management_training.jsonl",
+      "size_bytes": 3055,
+      "line_count": 6,
+      "sha256": "24ded0b524072cb4610950a7170130c877f68cae197ec840c5e59ff8fcca5ef5",
+      "first_timestamp": null,
+      "sample_fields": [
+        "affect_focus",
+        "input",
+        "instruction",
+        "output",
+        "pedagogy_strategy",
+        "session_action",
+        "session_management"
+      ],
+      "avg_chars_per_line": 508.17,
+      "est_tokens": 762
+    },
+    {
+      "relative_path": "fine_tuning/datasets/processed/tutoring/tutoring_datasets/pbcong_gsm8k_step_by_step_instructional.jsonl",
+      "size_bytes": 77547,
+      "line_count": 100,
+      "sha256": "8648d9a4b11bbf73e69846846f200e15430812df14126718798207fffd00e922",
+      "first_timestamp": null,
+      "sample_fields": [
+        "input",
+        "instruction",
+        "output"
+      ],
+      "avg_chars_per_line": 774.47,
+      "est_tokens": 19361
+    },
+    {
+      "relative_path": "fine_tuning/datasets/processed/tutoring/tutoring_datasets/pbcong_gsm8k_step_by_step_sample.jsonl",
+      "size_bytes": 602829,
+      "line_count": 1000,
+      "sha256": "b0e9964af3d3ba77cf5d505485293322d033e4ae1e79fc69c38a8f2ebe63d34a",
+      "first_timestamp": null,
+      "sample_fields": [
+        "answer",
+        "question"
+      ],
+      "avg_chars_per_line": 601.83,
+      "est_tokens": 150457
+    },
+    {
+      "relative_path": "fine_tuning/datasets/processed/tutoring/tutoring_datasets/Josephgflowers_OpenOrca-Step-by-step-reasoning_instructional.jsonl",
+      "size_bytes": 0,
+      "line_count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "first_timestamp": null,
+      "sample_fields": [],
+      "avg_chars_per_line": 0.0,
+      "est_tokens": 0
+    },
+    {
+      "relative_path": "fine_tuning/datasets/processed/tutoring/tutoring_datasets/KarthikaRajagopal_socratic_teaching_dataset_instructional.jsonl",
+      "size_bytes": 0,
+      "line_count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "first_timestamp": null,
+      "sample_fields": [],
+      "avg_chars_per_line": 0.0,
+      "est_tokens": 0
+    },
+    {
+      "relative_path": "fine_tuning/datasets/processed/tutoring/tutoring_datasets/KarthikaRajagopal_socratic_teaching_dataset_sample.jsonl",
+      "size_bytes": 305561,
+      "line_count": 188,
+      "sha256": "ba0b0b56a2264bf50f77c3b740c57f61f573f9548c8114a7177bbb7569049d72",
+      "first_timestamp": null,
+      "sample_fields": [
+        "messages"
+      ],
+      "avg_chars_per_line": 1624.32,
+      "est_tokens": 76343
+    },
+    {
+      "relative_path": "fine_tuning/datasets/processed/tutoring/tutoring_datasets/ChristophSchuhmann_basic-math-problems-with-step-by-step-solutions_instructional.jsonl",
+      "size_bytes": 0,
+      "line_count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "first_timestamp": null,
+      "sample_fields": [],
+      "avg_chars_per_line": 0.0,
+      "est_tokens": 0
+    },
+    {
+      "relative_path": "fine_tuning/datasets/processed/tutoring/tutoring_datasets/ChristophSchuhmann_basic-math-problems-with-step-by-step-solutions_sample.jsonl",
+      "size_bytes": 882266,
+      "line_count": 1000,
+      "sha256": "0ee644d95340df3347b36616cc4a546e7775a97ec7de0fc4c198255df99edd12",
+      "first_timestamp": null,
+      "sample_fields": [
+        "index",
+        "problem+solution"
+      ],
+      "avg_chars_per_line": 881.27,
+      "est_tokens": 220316
+    },
+    {
+      "relative_path": "fine_tuning/datasets/processed/tutoring/tutoring_datasets/Josephgflowers_OpenOrca-Step-by-step-reasoning_sample.jsonl",
+      "size_bytes": 1532758,
+      "line_count": 1000,
+      "sha256": "713bfaf21b6a6aad03faa80efecdfd601b886685d2c71052bb4c80aa5529639e",
+      "first_timestamp": null,
+      "sample_fields": [
+        "assistant",
+        "system",
+        "user"
+      ],
+      "avg_chars_per_line": 1531.76,
+      "est_tokens": 382939
+    }
+  ]
+}

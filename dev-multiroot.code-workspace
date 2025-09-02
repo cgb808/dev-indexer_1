@@ -1,0 +1,21 @@
+{
+  "folders": [
+    {
+      "name": "dev-indexer_1",
+      "path": ".",
+    },
+    {
+      "name": "AIWorkspace",
+      "path": "../AIWorkspace",
+    },
+  ],
+  "settings": {
+    "files.exclude": {
+      "**/.git": true,
+      "**/__pycache__": true,
+    },
+    "terminal.integrated.env.linux": {
+      "AIWORKSHOP_PATH": "${workspaceFolder:AIWorkspace}",
+    },
+  },
+}

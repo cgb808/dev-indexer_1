@@ -1,0 +1,26 @@
+FINE-TUNING WORKSPACE MIGRATION LOG
+==================================================
+
+SUCCESS: /home/cgbowen/AIWorkspace/scripts/hybrid_model_trainer.py → /home/cgbowen/AIWorkspace/fine_tuning/training/scripts/hybrid_model_trainer.py
+SUCCESS: /home/cgbowen/AIWorkspace/scripts/calculative_epoch_strategy.py → /home/cgbowen/AIWorkspace/fine_tuning/training/scripts/calculative_epoch_strategy.py
+SUCCESS: /home/cgbowen/AIWorkspace/scripts/create_hybrid_dataset.py → /home/cgbowen/AIWorkspace/fine_tuning/training/scripts/create_hybrid_dataset.py
+SUCCESS: /home/cgbowen/AIWorkspace/scripts/final_epoch_calculation.py → /home/cgbowen/AIWorkspace/fine_tuning/training/scripts/final_epoch_calculation.py
+SUCCESS: /home/cgbowen/AIWorkspace/scripts/hybrid_epoch_visualization.py → /home/cgbowen/AIWorkspace/fine_tuning/training/scripts/hybrid_epoch_visualization.py
+SUCCESS: /home/cgbowen/AIWorkspace/scripts/ultimate_models_comparison.py → /home/cgbowen/AIWorkspace/fine_tuning/validation/scripts/ultimate_models_comparison.py
+NOT_FOUND: /home/cgbowen/AIWorkspace/scripts/test_tutoring_model.py
+SUCCESS: /home/cgbowen/AIWorkspace/scripts/tutoring_ecosystem_tooling_analysis.py → /home/cgbowen/AIWorkspace/fine_tuning/tooling/coordination/tutoring_ecosystem_tooling_analysis.py
+SUCCESS: /home/cgbowen/AIWorkspace/scripts/memory_rag_bridge.py → /home/cgbowen/AIWorkspace/fine_tuning/tooling/rag/memory_rag_bridge.py
+SUCCESS: /home/cgbowen/AIWorkspace/data/MANIFEST_NEXT_EPOCH_final_balanced_dataset.json → /home/cgbowen/AIWorkspace/fine_tuning/datasets/manifests/MANIFEST_NEXT_EPOCH_final_balanced_dataset.json
+SUCCESS: /home/cgbowen/AIWorkspace/data/SUMMARY_NEXT_EPOCH_final_balanced_dataset.txt → /home/cgbowen/AIWorkspace/fine_tuning/datasets/manifests/SUMMARY_NEXT_EPOCH_final_balanced_dataset.txt
+SUCCESS: /home/cgbowen/AIWorkspace/docs/TUTORING_CALCULATIVE_IMPLEMENTATION.md → /home/cgbowen/AIWorkspace/documentation/fine_tuning/TUTORING_CALCULATIVE_IMPLEMENTATION.md
+SUCCESS: /home/cgbowen/AIWorkspace/docs/LEONARDO_RAG_INTEGRATION.md → /home/cgbowen/AIWorkspace/documentation/architecture/LEONARDO_RAG_INTEGRATION.md
+SUCCESS: /home/cgbowen/AIWorkspace/docs/LEONARDO_FINE_TUNING.md → /home/cgbowen/AIWorkspace/documentation/architecture/LEONARDO_FINE_TUNING.md
+SUCCESS: /home/cgbowen/AIWorkspace/docs/MIRA_AVATAR_INTEGRATION.md → /home/cgbowen/AIWorkspace/documentation/architecture/MIRA_AVATAR_INTEGRATION.md
+SUCCESS: /home/cgbowen/AIWorkspace/docs/HYBRID_RETRIEVAL_ARCHITECTURE.md → /home/cgbowen/AIWorkspace/documentation/architecture/HYBRID_RETRIEVAL_ARCHITECTURE.md
+SUCCESS: /home/cgbowen/AIWorkspace/docs/EDUCATIONAL_EXCELLENCE_EXAMPLES.md → /home/cgbowen/AIWorkspace/documentation/tutorials/EDUCATIONAL_EXCELLENCE_EXAMPLES.md
+SUCCESS: /home/cgbowen/AIWorkspace/docker-compose.yml → /home/cgbowen/AIWorkspace/infrastructure/docker/docker-compose.yml
+SUCCESS: /home/cgbowen/AIWorkspace/Dockerfile → /home/cgbowen/AIWorkspace/infrastructure/docker/Dockerfile
+SUCCESS: /home/cgbowen/AIWorkspace/requirements.txt → /home/cgbowen/AIWorkspace/infrastructure/configs/requirements.txt
+NOT_FOUND: /home/cgbowen/AIWorkspace/requirements-dev.txt
+SUCCESS: /home/cgbowen/AIWorkspace/pyproject.toml → /home/cgbowen/AIWorkspace/infrastructure/configs/pyproject.toml
+SUCCESS: /home/cgbowen/AIWorkspace/pyrightconfig.json → /home/cgbowen/AIWorkspace/infrastructure/configs/pyrightconfig.json

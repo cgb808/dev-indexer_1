@@ -1,0 +1,33 @@
+# /etc/systemd/system/queue-embedding-worker.service
+# Systemd unit for the queue embedding worker.
+# Edit Environment= lines or use an EnvironmentFile to inject secrets safely.
+
+[Unit]
+Description=ZenGlow Queue Embedding Worker
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+# WorkingDirectory should point to repo root clone location
+WorkingDirectory=/opt/ZenGlow
+ExecStart=/usr/bin/env bash -lc 'DATABASE_URL=${DATABASE_URL} \
+  EMBED_ENDPOINT=${EMBED_ENDPOINT:-http://127.0.0.1:8000/model/embed} \
+  WORKER_BATCH_SIZE=${WORKER_BATCH_SIZE:-16} \
+  WORKER_LISTEN=1 \
+  python dev-indexer_1/scripts/queue_embedding_worker.py'
+Restart=on-failure
+RestartSec=5
+# Hardening (adjust as needed)
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=full
+ProtectHome=true
+MemoryAccounting=true
+CPUAccounting=true
+
+# Provide via EnvironmentFile for secrets:
+# EnvironmentFile=/etc/zenglow/queue_worker.env
+
+[Install]
+WantedBy=multi-user.target

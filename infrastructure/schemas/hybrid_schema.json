@@ -1,0 +1,25 @@
+{
+  "_note": "Relocated from repository root on 2025-08-31 (root hygiene policy)",
+  "class": "HybridExample",
+  "description": "Hybrid pedagogy + math training example",
+  "vectorizer": "text2vec-transformers",
+  "vectorIndexType": "hnsw",
+  "vectorIndexConfig": {
+    "distance": "cosine",
+    "efConstruction": 128,
+    "maxConnections": 64,
+    "vectorCacheMaxObjects": 200000
+  },
+  "moduleConfig": {},
+  "properties": [
+    {"name": "example_type", "dataType": ["text"], "description": "Type of example"},
+    {"name": "instruction", "dataType": ["text"], "description": "Prompt / instruction"},
+    {"name": "output", "dataType": ["text"], "description": "Expected tutor response"},
+    {"name": "methodology_focus", "dataType": ["text"], "description": "Pedagogical focus", "indexInverted": true},
+    {"name": "subject_focus", "dataType": ["text"], "description": "Subject topic", "indexInverted": true},
+    {"name": "content_hash", "dataType": ["text"], "description": "Deterministic content hash", "indexInverted": true},
+    {"name": "split", "dataType": ["text"], "description": "Dataset split"},
+    {"name": "created_at", "dataType": ["date"], "description": "Ingestion timestamp"}
+  ],
+  "replicationConfig": {"factor": 1}
+}

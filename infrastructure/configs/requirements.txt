@@ -1,0 +1,49 @@
+###########################
+# Runtime / Core API
+###########################
+fastapi==0.110.0
+uvicorn[standard]==0.29.0
+psycopg2-binary
+redis
+msgpack
+requests
+pydantic
+python-multipart
+prometheus-client
+psutil
+pytest
+
+###########################
+# RAG / Model & ML Stack
+###########################
+numpy
+torch
+# Pin transformers to stabilize model/tokenizer behavior (avoid silent breaking changes)
+transformers==4.43.2  # (Optional) sentence-transformers moved to optional install due to Py3.13 tokenizers build issues
+datasets
+peft
+bitsandbytes
+accelerate
+safetensors
+faster-whisper
+piper-tts
+webrtcvad
+sounddevice
+
+###########################
+# Integrations / Optional
+###########################
+supabase
+nvidia-ml-py
+pyaudio
+openwakeword
+
+###########################
+# Notes:
+# - torch GPU build will be managed via Make target deps-gpu-or-cpu; this list only ensures torch present.
+# - faster-whisper pulls ctranslate2 transitively.
+# - Remove unused libs here rather than leaving commented inline.
+# - Add any local-only experimental deps under a separate heading below.
+# Optional embedding model dependency (install manually if running embedding service with Py<=3.12):
+# sentence-transformers
+

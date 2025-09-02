@@ -1,0 +1,12 @@
+# Dev / Tooling requirements (referenced by Makefile targets 'setup' and 'deps-gpu-or-cpu')
+ruff
+black
+isort
+mypy
+pytest-cov
+ipython
+# Git hooks / tooling
+pre-commit
+# Type stubs / typing helpers
+types-requests
+types-redis

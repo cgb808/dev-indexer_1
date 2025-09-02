@@ -1,0 +1,204 @@
+# Jarvis Training Data Mix Configuration (v1)
+# Purpose: Define target composition for first-pass Jarvis tutor / assistant fine-tuning blend.
+# Strategy: Reuse existing processed datasets; mark gaps for synthetic or curation backlog.
+# NOTE: Buckets flagged gap: true are not present yet and require generation scripts.
+
+schema_version: 1
+name: jarvis_mix_v1
+version: 1
+owner: data_eng
+created: 2025-08-31T00:00:00Z
+
+# Target total examples (adjust when gaps filled)
+# We purposely over-allocate pedagogical coverage; initial total excludes gap buckets until delivered.
+base_total: 4400   # Updated after activating initial safety buckets (added 200)
+projected_total_with_gaps: 5200  # Includes placeholders once created
+
+bucket_groups:
+  pedagogy: 0.55
+  reasoning: 0.20
+  robustness: 0.10
+  persona_engagement: 0.10
+  safety: 0.05
+
+# Bucket -> target_count mapping.
+# For existing buckets, counts approximate available rows (capped if underlying dataset larger; we can sample deterministically by hash).
+# For gap buckets we specify desired target_count but they do not yet contribute to base_total.
+
+buckets:
+  # --- Pedagogy (existing datasets) ---
+  socratic_method_core:
+    target_count: 600
+    source_files:
+      - processed/socratic_method/socratic_method_combined.jsonl
+    sampling: full_if_<=target_else_hash_sample
+  drill_down_questioning:
+    target_count: 400
+    source_files:
+      - processed/drill_down_questioning/combined_drill_down_questioning.jsonl
+    sampling: hash_sample
+  tutoring_methodology_core:
+    target_count: 450
+    source_files:
+      - processed/pure_methodology_tutoring.jsonl
+    sampling: full_if_<=target_else_hash_sample
+  hybrid_methodology_math:
+    target_count: 350
+    source_files:
+      - processed/hybrid/hybrid_methodology_math_dataset.jsonl
+    sampling: full_if_<=target_else_hash_sample
+  session_management:
+    target_count: 250
+    source_files:
+      - processed/interruption_handling/session_management_training.jsonl
+    sampling: full
+
+  # --- Reasoning (existing) ---
+  reasoning_step_by_step_math:
+    target_count: 500
+    source_files:
+      - processed/tutoring/tutoring_datasets/pbcong_gsm8k_step_by_step_instructional.jsonl
+    sampling: hash_sample
+  reasoning_openorca_explanatory:
+    target_count: 350
+    source_files:
+      - processed/tutoring/tutoring_datasets/Josephgflowers_OpenOrca-Step-by-step-reasoning_instructional.jsonl
+    sampling: hash_sample
+  reasoning_basic_math_word:
+    target_count: 250
+    source_files:
+      - processed/tutoring/tutoring_datasets/ChristophSchuhmann_basic-math-problems-with-step-by-step-solutions_instructional.jsonl
+    sampling: hash_sample
+
+  # --- Robustness (existing) ---
+  interruption_recovery_general:
+    target_count: 180
+    source_files:
+      - processed/interruption_handling/interruption_recovery_base_400.jsonl
+    sampling: hash_sample
+  interruption_recovery_specialized:
+    target_count: 120
+    source_files:
+      - processed/interruption_handling/interruption_recovery_specialized_100.jsonl
+    sampling: full_if_<=target
+  interruption_management_mixed:
+    target_count: 200
+    source_files:
+      - processed/interruption_handling/interruption_handling_training.jsonl
+      - processed/interruption_handling/combined_interruption_session_training.jsonl
+    sampling: hash_sample_merge_dedup
+
+  # --- Persona / Engagement (partial; gaps) ---
+  persona_stylistic_variants:
+    target_count: 220
+    gap: true
+    notes: Requires generation script to apply persona style transforms (e.g., Jeeves, Yogi, Motivational) over neutral prompts.
+  motivational_encouragement:
+    target_count: 200
+    gap: true
+    notes: Short encouragement & progress reflection turns; ensure diversity and age-level adaptation.
+  reflective_meta_cognition:
+    target_count: 200
+    gap: true
+    notes: Learner self-explanation & reflection scaffolds.
+
+  # --- Safety / Compliance (all gaps) ---
+  safety_moderation_interventions:
+    target_count: 120
+    source_files:
+      - processed/safety/safety_moderation_interventions.jsonl
+    sampling: full_if_<=target_else_hash_sample
+    notes: Synthetic v0 placeholder (replace with curated + policy template sourced set).
+  refusal_boundary_cases:
+    target_count: 80
+    source_files:
+      - processed/safety/refusal_boundary_cases.jsonl
+    sampling: hash_sample
+    notes: Synthetic v0 placeholder (refusal/allow boundary examples).
+  hallucination_grounding_checks:
+    target_count: 80
+    gap: true
+    notes: Model prompts user for source clarifications instead of fabricating.
+
+  # --- Future Pedagogy Enhancements (gaps) ---
+  adaptive_difficulty_planning:
+    target_count: 180
+    gap: true
+    notes: Chains where model classifies learner state then proposes next activity.
+  misconception_correction:
+    target_count: 200
+    gap: true
+    notes: Pairs of (learner utterance w/ misconception, guided correction strategy).
+  assessment_item_generation:
+    target_count: 160
+    gap: true
+    notes: Formative assessment item creation with answer key + rationale metadata.
+
+required_meta_fields:
+  - pedagogy_strategy
+  - learning_objective
+  - difficulty_level
+  - misconception_tag
+  - session_phase
+  - adaptation_decision
+  - affect_focus
+  - evaluation_rubric
+  - artifact_types
+
+# Artifact schemas to be enforced / validated (subset may be absent in some legacy source rows).
+artifacts_spec:
+  scaffold_steps: sequence of scaffolded instructional step strings
+  alternative_answers: sequence of distractor / misconception answers
+  rubric: object with criteria list {name, scale, weight}
+  reasoning_trace: freeform chain-of-thought style string (strip before public release)
+
+sampling_policies:
+  hash_sample: deterministic modulo of sha256(content_hash) < (target/available)
+  hash_sample_merge_dedup: union multiple sources; dedupe via normalized text hash; then hash_sample
+  full: include all rows
+  full_if_<=target_else_hash_sample: include all if count <= target else hash_sample
+
+normalization:
+  text_cleaning:
+    - trim_whitespace
+    - collapse_internal_spaces
+    - standardize_math_spacing
+  metadata_fill_defaults:
+    difficulty_level: unknown
+    session_phase: mid_session
+
+quality_filters:
+  min_instruction_len: 12
+  max_instruction_len: 4500
+  max_response_len: 8000
+  drop_if_response_contains:
+    - "\u0000"
+    - "<script>"
+  reject_if_missing_meta: true
+
+redaction:
+  remove_fields:
+    - reasoning_trace  # removed prior to export to open datasets
+  pii_patterns:
+    - "\\b\\d{3}-\\d{2}-\\d{4}\\b"   # SSN pattern guard
+
+hashing:
+  content_hash: sha256(normalized_instruction + "||" + normalized_response)
+  sample_seed: 20250831
+
+output:
+  staging_dir: fine_tuning/datasets/processed/jarvis_mix_v1
+  final_jsonl: jarvis_mix_v1_dataset.jsonl
+  manifest_json: jarvis_mix_v1_manifest.json
+  stats_json: jarvis_mix_v1_stats.json
+
+validation:
+  enforce_required_meta: true
+  allow_legacy_rows_without_artifacts: true
+  fail_on_gap_buckets: false  # allow partial build while gaps outstanding
+
+notes: |
+  This is the first integrated Jarvis (tutor) mix. Gap buckets enumerate prioritized future
+  data generation needs. base_total reflects only currently fulfilled buckets (existing datasets).
+  Once gap buckets are produced, projected_total_with_gaps will be realized and bucket_group ratios
+  should be rebalanced (especially safety >=5%).

@@ -1,0 +1,93 @@
+{
+  "router_config": {
+    "routing_engine": "hybrid",
+    "decision_latency_target_ms": 150,
+    "fallback_strategy": "round_robin",
+    "load_balancing": {
+      "algorithm": "weighted_round_robin",
+      "health_check_interval_ms": 5000,
+      "failure_threshold": 3
+    }
+  },
+  "routing_rules": {
+    "domain_routing": {
+      "mathematics": {
+        "primary_specialist": "phi3_mathematics_tutor",
+        "tools": ["calculator", "graphing", "latex_renderer", "equation_solver"],
+        "confidence_threshold": 0.8,
+        "fallback": "mistral_7b_general"
+      },
+      "science": {
+        "primary_specialist": "phi3_science_tutor", 
+        "tools": ["data_analyzer", "simulation_runner", "lab_guide", "formula_renderer"],
+        "confidence_threshold": 0.8,
+        "fallback": "mistral_7b_general"
+      },
+      "english": {
+        "primary_specialist": "phi3_english_tutor",
+        "tools": ["text_analyzer", "writing_assistant", "literature_database"],
+        "confidence_threshold": 0.8,
+        "fallback": "mistral_7b_general"
+      },
+      "history": {
+        "primary_specialist": "phi3_history_tutor",
+        "tools": ["timeline_creator", "map_generator", "primary_source_analyzer"],
+        "confidence_threshold": 0.8,
+        "fallback": "mistral_7b_general"
+      },
+      "art": {
+        "primary_specialist": "phi3_art_tutor",
+        "tools": ["image_analyzer", "color_palette", "music_notation", "timeline_creator"],
+        "confidence_threshold": 0.8,
+        "fallback": "mistral_7b_general"
+      },
+      "foreign_language": {
+        "primary_specialist": "phi3_language_tutor",
+        "tools": ["translator", "pronunciation_guide", "grammar_checker", "culture_guide"],
+        "confidence_threshold": 0.8,
+        "fallback": "mistral_7b_general"
+      }
+    },
+    "tool_routing": {
+      "mathematical": {
+        "route_to": "mathematics",
+        "priority": "high",
+        "cache_results": true
+      },
+      "visual": {
+        "route_to": "art",
+        "priority": "medium",
+        "cache_results": false
+      },
+      "search": {
+        "route_to": "data_analyzer",
+        "priority": "medium", 
+        "cache_results": true
+      },
+      "audio": {
+        "route_to": "foreign_language",
+        "priority": "high",
+        "cache_results": false
+      },
+      "workflow": {
+        "route_to": "mistral_7b_general",
+        "priority": "low",
+        "cache_results": false
+      }
+    }
+  },
+  "performance_monitoring": {
+    "track_routing_latency": true,
+    "track_specialist_performance": true,
+    "adaptive_routing": {
+      "enabled": true,
+      "performance_window_minutes": 5,
+      "auto_fallback_on_failure": true
+    }
+  },
+  "caching": {
+    "route_cache_enabled": true,
+    "cache_ttl_seconds": 300,
+    "max_cache_entries": 1000
+  }
+}

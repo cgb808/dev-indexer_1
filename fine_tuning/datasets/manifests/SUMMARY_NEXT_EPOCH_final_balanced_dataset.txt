@@ -1,0 +1,56 @@
+================================================================================
+DATASET MANIFEST SUMMARY
+================================================================================
+Generated: 2025-08-29T05:01:29.523316
+File: final_balanced_dataset.jsonl
+SHA256: 5f5f09bd31e050b0...
+
+DATASET OVERVIEW:
+  Total examples: 1,842
+  Unique content: 1,662
+  Duplication rate: 0.098
+  File size: 3,121,253 bytes
+
+ROLE DISTRIBUTION:
+  educational_expert:
+    Count: 290 (15.7%)
+    Avg tokens: 153.7
+    Token range: 60-328
+  family_tutor:
+    Count: 290 (15.7%)
+    Avg tokens: 153.4
+    Token range: 69-359
+  general_assistant:
+    Count: 1,069 (58.0%)
+    Avg tokens: 129.4
+    Token range: 49-328
+  philosophical_guide:
+    Count: 193 (10.5%)
+    Avg tokens: 132.5
+    Token range: 65-318
+
+QUALITY METRICS:
+  Avg instruction tokens: 75.9
+  Avg output tokens: 61.4
+  Avg total tokens: 137.3
+
+TOKEN DISTRIBUTION:
+  P25: 98
+  P50: 123
+  P75: 166
+  P90: 214
+  P95: 255
+
+SEPARATOR COVERAGE:
+  [CONTEXT]: 1,069 uses
+  [EXPLANATION_GOAL]: 290 uses
+  [FAMILY_CONTEXT]: 290 uses
+  [GUIDANCE]: 193 uses
+  [LEARNING_CONTEXT]: 290 uses
+  [LEARNING_OBJECTIVE]: 290 uses
+  [PHILOSOPHICAL_CONTEXT]: 193 uses
+  [REFLECTION_PROMPT]: 193 uses
+  [RESPONSE]: 1,359 uses
+  [TASK]: 1,069 uses
+  [TEACHING_RESPONSE]: 290 uses
+================================================================================
