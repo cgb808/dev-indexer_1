@@ -19,7 +19,7 @@ pytest
 numpy
 torch
 # Pin transformers to stabilize model/tokenizer behavior (avoid silent breaking changes)
-transformers==4.43.2  # (Optional) sentence-transformers moved to optional install due to Py3.13 tokenizers build issues
+transformers==4.53.0  # (Optional) sentence-transformers moved to optional install due to Py3.13 tokenizers build issues
 datasets
 peft
 bitsandbytes
